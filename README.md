@@ -1,8 +1,7 @@
-<center>
-<img src="https://raw.githubusercontent.com/sooooooooooooooooootheby/Typhon/main/logo.png" />
-
-<h1 style="color: #1B1B1B">🐭 Typhon 🐹</h1>
-</center>
+<p align="center">
+<img style="text-align:center;" src="https://raw.githubusercontent.com/sooooooooooooooooootheby/Typhon/main/logo.png" />
+</p>
+<h1 align="center" style="color: #1B1B1B">🐭 Typhon-back-end 🐹</h1>
 
 ## 项目介绍 🌕
 这是模仿X（Twitter）UI制作的留言板网站。
@@ -12,7 +11,7 @@ logo是一个纸飞机，请不要在意它和Telegram有什么关系，我只�
 本项目旨在学习前后端交互，以及[后端](https://github.com/sooooooooooooooooootheby/Typhon-back-end)搭建。虽然项目以学习为主，但也会挂到服务器上去正式运行。
 
 ## 技术栈 📦
-- vue3 (我用的选项式api比较多，因为我喜欢他，所以不要看了我的代码认为我是用的vue2 谢谢)
+- vue3 (我用的选项式api比较多，因为我喜欢他，所以看完我的代码请不要认为我是用的vue2 谢谢)
 - vueRouter (小网站就做单页面了)
 - pinia (状态管理，就是数据不是持久化比较麻烦，一刷新就没了，但是持久化了又会变成小而美)
 - scss (变量和mixin真的不错)
