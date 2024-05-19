@@ -1,7 +1,7 @@
 <p align="center">
 <img style="text-align:center;" src="https://raw.githubusercontent.com/sooooooooooooooooootheby/Typhon/main/logo.png" />
 </p>
-<h1 align="center" style="color: #1B1B1B">🐭 Typhon-back-end 🐹</h1>
+<h1 align="center" style="color: #1B1B1B">🐭 Typhon 🐹</h1>
 
 ## 项目介绍 🌕
 这是模仿X（Twitter）UI制作的留言板网站。
