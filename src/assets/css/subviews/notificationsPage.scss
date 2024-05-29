@@ -1,0 +1,12 @@
+@import "@/assets/css/_variables.scss";
+
+.notificationsPage {
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+    display: flex;
+    .notifications {
+        width: 590px;
+        padding: 20px 10px;
+    }
+}

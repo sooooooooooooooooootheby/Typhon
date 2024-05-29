@@ -1,0 +1,142 @@
+@import "@/assets/css/_variables.scss";
+
+.card {
+    width: 590px;
+    height: auto;
+    padding: 20px 10px;
+    justify-content: space-between;
+    border-bottom: 1px solid $border-color-light-1;
+    transition: $transition-1;
+    a {
+        display: flex;
+        text-decoration: none;
+        .head {
+            width: 42px;
+            height: 42px;
+            margin-right: 10px;
+            background-color: $background-color-light-1;
+            border-radius: 42px;
+            overflow: hidden;
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+        .postContent {
+            width: calc(100% - 40px);
+            .authorInfo {
+                display: flex;
+                span {
+                    font-weight: bold;
+                    color: $font-color-light-1;
+                    margin-right: 6px;
+                }
+                p {
+                    font-weight: normal;
+                    color: $font-color-light-2;
+                    margin: 0 2px;
+                }
+            }
+            .content {
+                color: $font-color-light-1;
+                font-size: 15px;
+            }
+
+            // 横图
+            .landscape {
+                width: 100%;
+                height: auto;
+                margin: 10px 0;
+                img {
+                    width: 100%;
+                    height: auto;
+                    border: 1px solid $border-color-light-2;
+                    border-radius: 12px;
+                }
+            }
+
+            //  竖图
+            .portrait {
+                width: auto;
+                height: 500px;
+                margin: 10px 0;
+                img {
+                    width: auto;
+                    height: 100%;
+                    border: 1px solid $border-color-light-2;
+                    border-radius: 12px;
+                }
+            }
+        }
+    }
+    // 控件
+    .control {
+        display: flex;
+        justify-content: end;
+        margin: 2px 0;
+        > div {
+            margin: 0 8px;
+            @include flexCenter;
+            color: $font-color-light-3;
+            button,
+            a {
+                appearance: none;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                border: 0px;
+                background: none;
+                border-radius: 20px;
+                padding: 8px;
+                @include flexCenter;
+                transition: $transition-1;
+                svg {
+                    font-size: 16px;
+                    color: $font-color-light-3;
+                    transition: $transition-1;
+                    cursor: pointer;
+                }
+            }
+            p {
+                font-size: 14px;
+                color: $font-color-light-3;
+                transition: $transition-1;
+            }
+        }
+        .isLike {
+            button {
+                svg {
+                    color: rgb(249, 24, 128);
+                }
+            }
+            p {
+                color: rgb(249, 24, 128);
+            }
+        }
+        .heartIcon:hover {
+            button {
+                background-color: rgba(249, 24, 128, 0.1);
+                svg {
+                    color: rgb(249, 24, 128);
+                }
+            }
+            p {
+                color: rgb(249, 24, 128);
+            }
+        }
+        .commentIcon:hover {
+            a {
+                background-color: rgba(29, 155, 240, 0.1);
+                text-decoration: none;
+                svg {
+                    color: rgb(29, 155, 240);
+                }
+            }
+            p {
+                color: rgb(29, 155, 240);
+            }
+        }
+    }
+}
+.card:hover {
+    background-color: $background-color-hover-light-1;
+}

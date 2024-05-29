@@ -1,0 +1,169 @@
+@import "@/assets/css/_variables.scss";
+.bg {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+
+    .infoPanel {
+        width: 800px;
+        min-height: 500px;
+        background-color: #ffffff;
+        border-radius: 16px;
+        overflow: hidden;
+        .controlBar {
+            width: 100%;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            .close {
+                width: 20px;
+                height: 20px;
+                margin: 20px;
+                border-radius: 20px;
+                background-color: #e64949;
+                transition: 0.2s;
+                cursor: pointer;
+            }
+            .close:hover {
+                background-color: #b83939;
+            }
+            p {
+                font-size: 20px;
+                line-height: 60px;
+                flex-grow: 1;
+            }
+            button {
+                padding: 5px 14px;
+                margin: 20px;
+                border-radius: 99px;
+            }
+            @include button;
+        }
+        .info {
+            width: 598px;
+            min-height: 500px;
+            margin: 0 auto;
+            position: relative;
+            .cover {
+                width: 100%;
+                height: 200px;
+                background-color: aliceblue;
+                position: relative;
+                .update {
+                    position: absolute;
+                    width: 100%;
+                    height: 200px;
+                    @include flexCenter;
+                    background-color: rgba($color: #1b1b1b, $alpha: 0.3);
+                    .button {
+                        margin: 0 20px;
+                        padding: 15px;
+                        @include flexCenter;
+                        border-radius: 99px;
+                        background-color: rgba($color: #1b1b1b, $alpha: 0.6);
+                        transition: 0.2s;
+                        svg {
+                            color: #ffffff;
+                            font-size: 20px;
+                        }
+                    }
+                    .button:hover {
+                        background-color: rgba($color: #1b1b1b, $alpha: 0.9);
+                    }
+                }
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+            .head {
+                width: 128px;
+                height: 128px;
+                position: absolute;
+                left: 16px;
+                top: 135px;
+                .update {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    @include flexCenter;
+                    border-radius: 200px;
+                    border: 4px solid #ffffff;
+                    background-color: rgba($color: #1b1b1b, $alpha: 0.3);
+                    .button {
+                        margin: 0 20px;
+                        padding: 15px;
+                        @include flexCenter;
+                        border-radius: 99px;
+                        background-color: rgba($color: #1b1b1b, $alpha: 0.6);
+                        transition: 0.2s;
+                        svg {
+                            color: #ffffff;
+                            font-size: 20px;
+                        }
+                    }
+                    .button:hover {
+                        background-color: rgba($color: #1b1b1b, $alpha: 0.9);
+                    }
+                }
+                img {
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 100%;
+                    border: 4px solid #ffffff;
+                }
+            }
+            .input {
+                margin-top: 80px;
+                label {
+                    width: calc(100% - 16px);
+                    margin-bottom: 20px;
+                    padding: 8px;
+                    display: flex;
+                    flex-direction: column;
+                    border: 1px solid $border-color-light-5;
+                    border-radius: 8px;
+                    > div {
+                        display: flex;
+                        justify-content: space-between;
+                        span {
+                            color: $font-color-light-2;
+                            font-size: 16px;
+                        }
+                    }
+                    input {
+                        margin: 4px 0;
+                        outline: none;
+                        border: none;
+                        font-size: 16px;
+                        color: $font-color-light-1;
+                    }
+                    textarea {
+                        resize: none;
+                        outline: none;
+                        border: none;
+                        font-size: 16px;
+                        color: $font-color-light-1;
+                    }
+                    .warn {
+                        color: #e64949;
+                    }
+                    .http {
+                        align-items: center;
+                        input {
+                            width: 100%;
+                            margin: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

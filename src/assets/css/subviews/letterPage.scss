@@ -1,0 +1,12 @@
+@import "@/assets/css/_variables.scss";
+
+.letterPage {
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+    display: flex;
+    .letter {
+        width: 590px;
+        padding: 20px 10px;
+    }
+}

@@ -1,0 +1,88 @@
+@import "@/assets/css/_variables.scss";
+
+.loginAndRegister {
+    width: 100vw;
+    height: 100vh;
+    @include flexCenter;
+
+    >div {
+        width: 45%;
+        height: 100%;
+    }
+    .logo {
+        @include flexCenter;
+        svg {
+            font-size: 400px;
+        }
+    }
+    .panel {
+        display: flex;
+        justify-content: center;
+        align-items: start;
+        flex-direction: column;
+        .title {
+            font-size: 40px;
+            font-weight: bold;
+            color: $font-color-light-1;
+        }
+        .title:nth-child(1) {
+            font-size: 60px;
+        }
+        form {
+            margin: 20px 0;
+            >div {
+                display: flex;
+                flex-direction: column;
+                span {
+                    color: $font-color-light-2;
+                    a {
+                        text-decoration: dashed;
+                        cursor: pointer;
+                        color: $font-color-light-1;
+                        transition: $transition-1;
+                    }
+                    a:hover {
+                        color: $theme-color-1;
+                    }
+                }
+                input {
+                    width: 300px;
+                    padding: 8px;
+                    outline: none;
+                    border: 1px solid $border-color-light-3;
+                    border-radius: 8px;
+                    position: relative;
+                }
+                .usernameHint {
+                    position: absolute;
+                    opacity: 0;
+                    z-index: -99;
+                    background-color: $background-color-light-0;
+                    box-shadow: 0px 0px 4px 4px rgba($color: #1b1b1b, $alpha: 0.2);
+                    border-radius: 6px;
+                    padding: 4px 8px;
+                }
+            }
+            .code {
+                input {
+                    width: 184px;
+                }
+                button {
+                    width: 56px;
+                    margin: 0 2px;
+                }
+            }
+            button {
+                width: 316px;
+                margin: 24px 0;
+                padding: 8px;
+                border-radius: 8px;
+            }
+            @include button;
+        }
+        .register {
+            color: $font-color-light-1;
+            @include a;
+        }
+    }
+}

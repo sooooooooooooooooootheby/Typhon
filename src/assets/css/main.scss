@@ -1,0 +1,18 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: SourceHan;
+}
+
+.icon {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+}
+
+@font-face {
+    font-family: SourceHan;
+    src: url("@/assets/font/SourceHanSansCN-Medium.otf");
+}
