@@ -26,7 +26,7 @@ import card from "@/components/card.vue";
 import { postStore } from "@/stores/post.js";
 
 export default {
-    props: ["username"],
+    props: ["uid"],
     components: {
         card,
     },
@@ -43,9 +43,9 @@ export default {
         };
     },
     methods: {
-        async getUsersnamePost() {
+        async getUsersPost() {
             try {
-                await this.handlePost.getUsersnamePost(this.accessToken, { username: this.username, page: this.page, pageSize: this.pageSize });
+                await this.handlePost.getUserPost(this.accessToken, { uid: this.uid, page: this.page, pageSize: this.pageSize });
                 this.newPost = this.handlePost.postList;
                 if (this.newPost.length > 0) {
                     this.post = [...this.post, ...this.newPost];
@@ -59,12 +59,12 @@ export default {
         },
     },
     mounted() {
-        this.getUsersnamePost();
+        this.getUsersPost();
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
-                    this.getUsersnamePost();
+                    this.getUsersPost();
                 }
             });
         });

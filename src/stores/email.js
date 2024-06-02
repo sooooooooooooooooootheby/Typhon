@@ -6,21 +6,20 @@ export const emailStore = defineStore({
     store: () => {
         return {
             message: null,
-            isSend: false,
+            code: null,
         };
     },
     actions: {
         // 邮箱
-        async email({ email }) {
+        async sendEmail({ email }) {
             try {
-                const res = await axios.post("/sendCode", { email });
+                const res = await axios.post("/sendEmail", { email });
                 if (res.data.code === 0) {
-                    this.message = res.data.message;
-                    return;
+                    this.code = res.data.code;
+                    return this.message = res.data.message;
                 }
-
+                this.code = res.data.code;
                 this.message = res.data.message;
-                this.isSend = true;
             } catch (error) {
                 this.message = error.response.data.message;
             }

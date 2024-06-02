@@ -10,7 +10,7 @@
                 <div class="info">
                     <div class="cover">
                         <div class="update">
-                            <ImgCutter rate="5.98:2" @cutDown="cutCover">
+                            <ImgCutter rate="12.2:4" @cutDown="cutCover">
                                 <template #open>
                                     <div class="button">
                                         <svg class="icon" aria-hidden="true">
@@ -80,18 +80,22 @@
 
 <script>
 import { userStore } from "@/stores/user.js";
+import { uploadStore } from "@/stores/upload.js";
 import ImgCutter from "vue-img-cutter";
 import aotolog from "autolog.js";
 import axios from "axios";
 
 export default {
+    props: ["usersInfo"],
     components: {
         ImgCutter,
     },
     data() {
         const user = userStore();
+        const upload = uploadStore();
         return {
             handleUser: user,
+            handleUpload: upload,
 
             nameValue: null,
             nameCharCount: 0,
@@ -110,37 +114,32 @@ export default {
             websiteWarn: false,
 
             cover: null,
+            coverInfo: {},
+
             head: null,
+            headInfo: {},
             token: localStorage.getItem("accessToken"),
-            userInfo: null,
         };
     },
     methods: {
-        getUserInfo() {
-            if (this.token) {
-                this.fetchData();
-            }
-        },
-        async fetchData() {
-            try {
-                await this.handleUser.getTokenUserInfo(this.token);
-                this.userInfo = this.handleUser.userInfo;
-                this.nameValue = this.userInfo.name;
-                this.introductionValue = this.userInfo.introduction;
-                this.placeValue = this.userInfo.place;
-                this.websiteValue = this.userInfo.website;
-                this.cover = this.userInfo.background_image;
-                this.head = this.userInfo.head;
-                this.limitInput(this.nameValue, 23, "nameValue", "nameWarn", "nameCharCount");
-                this.limitInput(this.introductionValue, 254, "introductionValue", "introductionWarn", "introductionCharCount");
-                this.limitInput(this.placeValue, 29, "placeValue", "placeWarn", "placeCharCount");
-                this.limitInput(this.websiteValue, 99, "websiteValue", "websiteWarn", "websiteCharCount");
-            } catch (error) {
-                console.log(error);
-            }
+        // 写入信息
+        writeInUserInfo() {
+            this.nameValue = this.usersInfo.name;
+            this.introductionValue = this.usersInfo.introduction;
+            this.placeValue = this.usersInfo.place;
+            this.websiteValue = this.usersInfo.website;
+            this.cover = this.usersInfo.background_image;
+            this.head = this.usersInfo.head;
+            this.limitInput(this.nameValue, 23, "nameValue", "nameWarn", "nameCharCount");
+            this.limitInput(this.introductionValue, 254, "introductionValue", "introductionWarn", "introductionCharCount");
+            this.limitInput(this.placeValue, 29, "placeValue", "placeWarn", "placeCharCount");
+            this.limitInput(this.websiteValue, 99, "websiteValue", "websiteWarn", "websiteCharCount");
         },
         limitInput(value, maxChars, valueProperty, warnProperty, charCountProperty) {
             let currentCount = 0;
+            if (!value) {
+                return;
+            }
             let newValue = value;
 
             for (let i = 0; i < value.length; i++) {
@@ -167,12 +166,12 @@ export default {
             this[charCountProperty] = currentCount;
         },
         cutCover(res) {
-            console.log(res);
             if (res.file.size > 5000000) {
                 aotolog.log("图片过大，请上传小于5mb的图片", "warn", 2500);
                 return;
             }
             this.cover = res.dataURL;
+            this.coverInfo = res;
         },
         cutHead(res) {
             if (res.file.size > 5000000) {
@@ -180,33 +179,56 @@ export default {
                 return;
             }
             this.head = res.dataURL;
+            this.headInfo = res;
         },
         async handleSubmit(event) {
             // 阻止默认的提交行为
             event.preventDefault();
-            const formData = new FormData(event.target);
-            formData.append("cover", this.cover);
-            formData.append("head", this.head);
+
+            if (JSON.stringify(this.coverInfo) != "{}") {
+                try {
+                    await this.handleUpload.uploadUserInfo_image({ token: this.token, imageInfo: this.coverInfo, imageType: "userCover" });
+                } catch (err) {
+                    console.log(err);
+                }
+            }
+
+            if (JSON.stringify(this.headInfo) != "{}") {
+                try {
+                    await this.handleUpload.uploadUserInfo_image({ token: this.token, imageInfo: this.headInfo, imageType: "userHead" });
+                } catch (err) {
+                    console.log(err);
+                }
+            }
+
+            const userInfo = {
+                token: this.token,
+                name: this.nameValue,
+                introduction: this.introductionValue,
+                place: this.placeValue,
+                website: this.websiteValue,
+            };
+
+            if (this.handleUpload.headUrl) {
+                userInfo.head = this.handleUpload.headUrl;
+            }
+
+            if (this.handleUpload.coverUrl) {
+                userInfo.background_image = this.handleUpload.coverUrl;
+            }
 
             try {
-                // 发起 POST 请求
-                const response = await axios.post("http://127.0.0.1:4000/api/setUserInfo", formData, {
-                    headers: {
-                        Authorization: `Bearer ${this.token}`,
-                    },
-                });
-
-                // 处理请求成功的响应
-                aotolog.log("提交成功", "success", 2500);
-            } catch (error) {
-                // 处理请求失败的情况
-                console.error("Error:", error);
-                aotolog.log("提交失败", "error", 2500);
+                await this.handleUser.updateUserInfo(userInfo);
+                this.$parent.cutInfoPanel();
+            } catch (err) {
+                console.log(err);
             }
         },
     },
     mounted() {
-        this.getUserInfo();
+        setTimeout(() => {
+            this.writeInUserInfo();
+        }, 500);
     },
 };
 </script>

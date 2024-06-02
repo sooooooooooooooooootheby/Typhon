@@ -42,26 +42,35 @@ export default {
         };
     },
     methods: {
+        // 获取用户信息
         async getUserInfo() {
             try {
                 await this.handleUser.getUserInfo({
                     username: this.username,
                 });
-            } catch(err) {
+            } catch (err) {
                 console.log(err);
             }
         },
+        // 处理登录
         async handleLogin() {
             if (this.username === null) {
-                aotolog.log("用户名不能为空", "warn", this.logTimeout);
-                return;
+                return aotolog.log("用户名不能为空", "warn", this.logTimeout);
             }
             if (this.password === null) {
-                aotolog.log("密码不能为空", "warn", this.logTimeout);
-                return;
+                return aotolog.log("密码不能为空", "warn", this.logTimeout);
             }
 
-            const salt = this.username + this.password + 'typhon';
+            const usernameRegex = /^[a-zA-Z0-9_-]{3,16}$/;
+            if (!usernameRegex.test(this.username)) {
+                return aotolog.log("用户名格式错误", "warn", this.logTimeout);
+            }
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+            if (!passwordRegex.test(this.password)) {
+                return aotolog.log("密码格式错误", "warn", this.logTimeout);
+            }
+
+            const salt = this.username + this.password + "typhon";
             const hashPassword = CryptoJS.SHA256(salt).toString();
             try {
                 await this.handleUser.login({
@@ -69,13 +78,12 @@ export default {
                     password: hashPassword,
                 });
 
-                if (!this.handleUser.isLogin) {
-                    aotolog.log(this.handleUser.message, "error", this.logTimeout);
-                    return;
+                if (this.handleUser.code === 0) {
+                    return aotolog.log(this.handleUser.message, "error", this.logTimeout);
                 }
 
                 this.getUserInfo();
-                this.handleUser.isLogin = false;
+                this.handleUser.code = null;
                 aotolog.log(this.handleUser.message, "success", this.logTimeout);
                 this.$router.push("/");
             } catch (err) {

@@ -6,123 +6,168 @@ export const userStore = defineStore({
     state: () => {
         return {
             message: null,
-            isLogin: false,
+            code: null,
             userInfo: {},
             usersInfo: {},
-            isRegister: false,
-            code: null,
+            newUser: [],
         };
     },
     actions: {
-        // 登录
-        async login({ username, password }) {
-            try {
-                const res = await axios.post("/login", { username, password });
-                if (res.data.code === 0) {
-                    this.message = res.data.message;
-                    return;
-                }
-                localStorage.setItem("accessToken", res.data.accessToken);
-                localStorage.setItem("refreshToken", res.data.refreshToken);
-                this.message = res.data.message;
-                this.isLogin = true;
-            } catch (error) {
-                if (error.response) {
-                    this.message = error.response.data.message;
-                }
-            }
-        },
-        // 获取用户信息
-        async getUserInfo({ username }) {
-            try {
-                const res = await axios.get("/getUserInfo", { params: { username } });
-                if (res.data.code === 0) {
-                    this.message = res.data.message;
-                    return;
-                }
-                this.usersInfo = res.data;
-            } catch (error) {
-                if (error.response) {
-                    this.message = error.response.data.message;
-                }
-            }
-        },
-        async getTokenUserInfo(token) {
-            try {
-                const res = await axios.get("/getTokenUserInfo", {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-                this.userInfo = res.data;
-            } catch (error) {
-                if (error.response) {
-                    this.message = error.response.data.message;
-                }
-            }
-        },
         // 注册
         async register({ email, code, username, password }) {
             try {
                 const res = await axios.post("/register", { email, code, username, password });
                 if (res.data.code === 0) {
-                    this.message = res.data.message;
-                    return;
+                    this.code = res.data.code;
+                    return (this.message = res.data.message);
                 }
+                this.code = res.data.code;
                 this.message = res.data.message;
-                this.isRegister = true;
-            } catch (error) {
-                if (error.response) {
-                    this.message = error.response.data.message;
-                }
+            } catch (err) {
+                this.message = err.response.data.message;
             }
         },
-        // 请求accessToken
-        async getAccessToken(refreshToken) {
+        // 登录
+        async login({ username, password }) {
             try {
-                const res = await axios.get("/getAccessToken", { params: { refreshToken } });
-                if (res.data.code === 1) {
+                const res = await axios.post("/login", { username, password });
+                if (res.data.code === 0) {
                     this.code = res.data.code;
-                    localStorage.setItem("accessToken", res.data.accessToken);
-                    localStorage.setItem("refreshToken", res.data.refreshToken);
-                    return;
+                    return (this.message = res.data.message);
                 }
-                if (res.data.code === 2) {
+                this.code = res.data.code;
+                this.message = res.data.message;
+                localStorage.setItem("accessToken", res.data.accessToken);
+                localStorage.setItem("refreshToken", res.data.refreshToken);
+            } catch (err) {
+                this.message = err.response.data.message;
+            }
+        },
+        // 获取用户信息
+        async getUserInfo({ token, username }) {
+            if (token) {
+                try {
+                    const res = await axios.get("/getUserInfo", {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    });
+                    if (res.data.code === 0) {
+                        this.code = res.data.code;
+                        return (this.message = res.data.message);
+                    }
                     this.code = res.data.code;
-                    return;
+                    this.userInfo = res.data.results[0];
+                } catch (err) {
+                    console.log(err);
                 }
-            } catch (error) {
-                if (error.response) {
-                    this.message = error.response.data.message;
+                return;
+            }
+            if (username) {
+                try {
+                    const res = await axios.get("/getUserInfo", {
+                        params: {
+                            username,
+                        },
+                    });
+                    if (res.data.code === 0) {
+                        this.code = res.data.code;
+                        return (this.message = res.data.message);
+                    }
+                    this.code = res.data.code;
+                    this.usersInfo = res.data.results[0];
+                } catch (err) {
+                    console.log(err);
                 }
+                return;
+            }
+        },
+        // 更新accessToken
+        async updateAccessToken({ refreshToken }) {
+            try {
+                const res = await axios.post("/updateAccessToken", { refreshToken });
+                if (res.data.code === 0) {
+                    this.code = res.data.code;
+                    return (this.message = res.data.message);
+                }
+                localStorage.setItem("accessToken", res.data.accessToken);
+                localStorage.setItem("refreshToken", res.data.newRefreshToken);
+            } catch (err) {
+                console.log(err);
+            }
+        },
+        // 获取新注册的用户
+        async getNewUser() {
+            try {
+                const res = await axios.get("/getNewUser");
+
+                this.newUser = res.data.results;
+            } catch (err) {
+                console.log(err);
+            }
+        },
+        // 升级状态
+        async updateStatus({ token, status }) {
+            try {
+                const res = await axios.post(
+                    "/updateStatus",
+                    {
+                        status,
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+
+                if (res.data.code === 0) {
+                    this.code = res.data.code;
+                    return (this.message = res.data.message);
+                }
+
+                this.message = res.data.message;
+            } catch (err) {
+                console.log(err);
             }
         },
         // 登出
-        async logout(uid) {
+        async logout({ token }) {
             try {
-                const res = await axios.post("/logout", { uid });
-            } catch (error) {
-                if (error.response) {
-                    this.message = error.response.data.message;
+                const res = await axios.post(
+                    "/logout",
+                    {},
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+            } catch (err) {
+                console.log(err);
+            }
+        },
+        // 更新用户信息
+        async updateUserInfo({ token, background_image, head, name, introduction, place, website }) {
+            try {
+                const res = await axios.post(
+                    "/updateUserInfo",
+                    { background_image, head, name, introduction, place, website },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+
+                if (res.data.code === 0) {
+                    this.code = res.data.code;
+                    return (this.message = res.data.message);
                 }
-            }
-        },
-        // 获取新用户
-        async getNewUser() {
-            try {
-                const res = await axios.get("/newUser");
-                this.newUser = res.data.results;
-            } catch (error) {
-                this.message = error.response.data.message;
-            }
-        },
-        // 升级身份
-        async status({ uid, status }) {
-            try {
-                const res = await axios.post("/status", { uid, status });
-                this.message = res.data;
-            } catch (error) {
-                this.message = error.response.data.message;
+
+                this.message = res.data.message;
+            } catch (err) {
+                console.log(err);
             }
         },
     },

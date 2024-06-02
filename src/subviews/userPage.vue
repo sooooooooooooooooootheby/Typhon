@@ -44,10 +44,10 @@
                 <router-link :to="`/user/${handleUser.usersInfo.username}/like`" :class="{ select: isLikeList }">喜欢</router-link>
             </div>
             <div class="content">
-                <router-view :username="username" />
+                <router-view :uid="uid" />
             </div>
         </div>
-        <setUser v-show="isSetUser"/>
+        <setUser v-show="isSetUser" :usersInfo="usersInfo" />
         <sideFooter />
     </div>
 </template>
@@ -76,6 +76,8 @@ export default {
             topNavTitle: "",
             topNavSubTitle: "",
             show: 1,
+            uid: null,
+            usersInfo: {},
         };
     },
     methods: {
@@ -84,6 +86,8 @@ export default {
                 await this.handleUser.getUserInfo({ username: this.username });
                 this.topNavTitle = this.handleUser.usersInfo.name;
                 this.topNavSubTitle = this.handleUser.usersInfo.post_count + " 帖子  " + this.handleUser.usersInfo.like_count + " 喜欢";
+                this.uid = this.handleUser.usersInfo.uid;
+                this.usersInfo = this.handleUser.usersInfo;
             } catch (error) {
                 console.log(error);
             }

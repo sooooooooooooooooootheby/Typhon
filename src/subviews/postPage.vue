@@ -3,11 +3,11 @@
     <div class="postPage">
         <div class="post">
             <div class="author">
-                <router-link :to="/user/ + handlePost.postItem.username">
-                    <img :src="handlePost.postItem.head" alt="" />
+                <router-link :to="/user/ + handlePost.postDetail.username">
+                    <img :src="handlePost.postDetail.head" alt="" />
                     <div class="text">
-                        <span>{{ handlePost.postItem.name }}</span>
-                        <p>@{{ handlePost.postItem.username }}</p>
+                        <span>{{ handlePost.postDetail.name }}</span>
+                        <p>@{{ handlePost.postDetail.username }}</p>
                     </div>
                 </router-link>
             </div>
@@ -17,7 +17,7 @@
             </blockquote>
 
             <div class="cover" :class="{ landscape: isLandscape, portrait: isPortrait }">
-                <img :src="handlePost.postItem.post_cover" alt="" ref="cover" @load="image" />
+                <img :src="handlePost.postDetail.cover" alt="" ref="cover" @load="image" />
             </div>
 
             <div class="time">
@@ -31,8 +31,8 @@
                             <use xlink:href="#heart"></use>
                         </svg>
                     </button>
-                    <p v-if="!handlePost.postItem.like_count">0</p>
-                    <p v-else>{{ handlePost.postItem.like_count }}</p>
+                    <p v-if="!handlePost.postDetail.like_count">0</p>
+                    <p v-else>{{ handlePost.postDetail.like_count }}</p>
                 </div>
                 <div class="commentIcon">
                     <a href="#comment">
@@ -40,18 +40,18 @@
                             <use xlink:href="#chat-empty"></use>
                         </svg>
                     </a>
-                    <p v-if="!handlePost.postItem.comment_count">0</p>
-                    <p v-else>{{ handlePost.postItem.comment_count }}</p>
+                    <p v-if="!handlePost.postDetail.comment_count">0</p>
+                    <p v-else>{{ handlePost.postDetail.comment_count }}</p>
                 </div>
             </div>
 
             <div class="writeComment" id="comment">
                 <span class="title">
-                    回复: <router-link :to="/user/ + handlePost.postItem.username">@{{ handlePost.postItem.username }}</router-link>
+                    回复: <router-link :to="/user/ + handlePost.postDetail.username">@{{ handlePost.postDetail.username }}</router-link>
                 </span>
                 <div class="box">
                     <div class="left">
-                        <img :src="handlePost.postItem.head" alt="" />
+                        <img :src="handleUser.userInfo.head" alt="" />
                     </div>
                     <div class="right">
                         <v-md-editor v-model="text" left-toolbar="undo redo | emoji" mode="edit" height="100px"></v-md-editor>
@@ -65,11 +65,8 @@
             <iframe name="stop" style="display: none"></iframe>
 
             <div class="comment">
-                <div v-if="message" class="message">
-                    {{ message }}
-                </div>
                 <ul>
-                    <li v-for="cid in comment" :key="cid">
+                    <li v-for="cid in commentList" :key="cid">
                         <router-link :to="/user/ + cid.username">
                             <div class="head">
                                 <img :src="cid.head" alt="" />
@@ -81,10 +78,10 @@
                                     <span>{{ cid.name }}</span>
                                     <p>@{{ cid.username }}</p>
                                 </router-link>
-                                <p>{{ cid.create_time }}</p>
+                                <p>{{ time(cid.create_time) }}</p>
                             </div>
                             <div class="content">
-                                {{ cid.comment }}
+                                {{ cid.content }}
                             </div>
                         </div>
                     </li>
@@ -100,8 +97,8 @@ import markdownIt from "markdown-it";
 import topNav from "@/components/topNav.vue";
 import sideFooter from "@/components/sideFooter.vue";
 import { postStore } from "@/stores/post";
+import { userStore } from "@/stores/user";
 import aotolog from "autolog.js";
-import axios from "axios";
 
 export default {
     props: ["pid"],
@@ -111,22 +108,29 @@ export default {
     },
     data() {
         const post = postStore();
+        const user = userStore();
         return {
             handlePost: post,
+            handleUser: user,
+
             accessToken: localStorage.getItem("accessToken"),
             isLandscape: false,
             isPortrait: false,
-            postContent: null,
+
             compiledMarkdown: "",
             text: "发布你的回复",
             postTime: null,
             isLike: false,
             throttledLikes: null,
+            throttledComment: null,
             author: {},
-            comment: [],
-            message: null,
-            topNavTitle: "帖子",
+
+            topNavTitle: "",
             show: 1,
+
+            commentList: [],
+            page: 1,
+            pageSize: 5,
         };
     },
     methods: {
@@ -143,7 +147,7 @@ export default {
         },
         showMarkdown() {
             const md = markdownIt();
-            this.compiledMarkdown = md.render(this.postContent);
+            this.compiledMarkdown = md.render(this.handlePost.postDetail.content);
         },
         handleTime(time) {
             let date = new Date(time);
@@ -155,62 +159,77 @@ export default {
 
             return `上午${hour}:${minute} · ${year}年${month}月${day}日`;
         },
-        async getComment() {
-            try {
-                await this.handlePost.getComment({ pid: this.pid });
+        time(time) {
+            const currentTime = new Date();
+            const articleCreateTime = new Date(time);
+            const timeDifference = currentTime - articleCreateTime;
 
-                if (this.handlePost.message) {
-                    this.message = this.handlePost.message;
-                    return;
-                }
+            const secondsDifference = Math.floor(timeDifference / 1000);
+            const minutesDifference = Math.floor(secondsDifference / 60);
+            const hoursDifference = Math.floor(minutesDifference / 60);
+            const daysDifference = Math.floor(hoursDifference / 24);
+            const yearDifference = Math.floor(daysDifference / 365);
 
-                this.comment = this.handlePost.comment;
-                for (let i = 0; i < this.comment.length; i++) {
-                    let comment = this.comment[i];
-                    let time = this.handleTime(comment.create_time);
-                    this.comment[i].create_time = time;
-                }
-            } catch (err) {
-                console.log(err);
+            let displayTimeDifference = "";
+            if (yearDifference > 0) {
+                displayTimeDifference = `${yearDifference} 年前`;
+            } else if (daysDifference > 0) {
+                displayTimeDifference = `${daysDifference} 天前`;
+            } else if (hoursDifference > 0) {
+                displayTimeDifference = `${hoursDifference} 小时前`;
+            } else if (minutesDifference > 0) {
+                displayTimeDifference = `${minutesDifference} 分钟前`;
+            } else {
+                displayTimeDifference = `${secondsDifference} 秒前`;
             }
+
+            return displayTimeDifference;
         },
         async getDetailPost() {
             try {
-                await this.handlePost.getDetailPost(this.accessToken, { pid: this.pid });
-                this.postContent = this.handlePost.postItem.post_content;
-                let { head, name, username, introduction } = this.handlePost.postItem;
-                this.author = { head, name, username, introduction };
-                if (this.handlePost.postItem.user_like_status === 1) {
-                    this.isLike = true;
+                await this.handlePost.getPostDetail({ token: this.accessToken, pid: this.pid });
+
+                if (!this.handlePost.code === 0) {
+                    this.handlePost.code = null;
+                    return aotolog.log(this.handlePost.message, "error", this.logTimeout);
                 }
+
                 this.showMarkdown();
-                let time = this.handleTime(this.handlePost.postItem.create_time);
-                this.postTime = time;
-                this.getComment();
+                this.topNavTitle = this.handlePost.postDetail.name + " 的帖子";
+                this.postTime = this.handleTime(this.handlePost.postDetail.create_time);
+                this.author = { head: this.handlePost.postDetail.head, name: this.handlePost.postDetail.name, username: this.handlePost.postDetail.username, introduction: this.handlePost.postDetail.introduction };
             } catch (err) {
                 console.log(err);
             }
         },
-        async addHeart() {
+        async like(token, pid) {
             try {
-                await this.handlePost.heart(this.accessToken, { pid: this.pid });
-                if (this.handlePost.message) {
-                    aotolog.log(this.handlePost.message, "warn", 2500);
+                await this.handlePost.like({ token: token, pid: pid });
+
+                if (!this.handlePost.code === 0) {
+                    this.handlePost.code = null;
+                    return aotolog.log(this.handlePost.message, "error", this.logTimeout);
                 }
-                this.handlePost.postItem.like_count++;
-            } catch (err) {
-                aotolog.log(err, "warn", 2500);
+
+                this.isLike = true;
+                this.handlePost.postDetail.like_count++;
+            } catch (error) {
+                aotolog.log(error.request.response, "warn", 2500);
             }
         },
-        async delHeart() {
+        async unlike(token, pid) {
             try {
-                await this.handlePost.noHeart(this.accessToken, { pid: this.pid });
-                if (this.handlePost.message) {
-                    aotolog.log(this.handlePost.message, "warn", 2500);
+                await this.handlePost.unlike({ token: token, pid: pid });
+
+                if (!this.handlePost.code === 0) {
+                    this.handlePost.code = null;
+                    return aotolog.log(this.handlePost.message, "error", this.logTimeout);
                 }
-                this.handlePost.postItem.like_count--;
-            } catch (err) {
-                aotolog.log(err, "warn", 2500);
+
+                this.isLike = false;
+                this.handlePost.postDetail.like_count--;
+            } catch (error) {
+                console.log(error);
             }
         },
         throttle(func, limit) {
@@ -229,43 +248,64 @@ export default {
             // 调用节流函数
             this.throttledLikes();
         },
-        async handleLikes() {
+        handleLikes() {
             if (this.isLike) {
-                await this.delHeart();
-                this.isLike = false;
+                this.unlike(this.accessToken, this.pid);
             } else {
-                await this.addHeart();
-                this.isLike = true;
+                this.like(this.accessToken, this.pid);
             }
         },
-        async handleSubmit(event) {
-            // 阻止默认的提交行为
-            event.preventDefault();
-
-            // 获取表单数据
-            const formData = new FormData(event.target);
-            formData.append("pid", this.handlePost.postItem.pid);
-
+        async getPostComment() {
             try {
-                // 发起 POST 请求
-                const response = await axios.post("/comment", formData, {
-                    headers: {
-                        Authorization: `Bearer ${this.accessToken}`,
-                    },
-                });
+                await this.handlePost.getPostComment({ pid: this.pid, page: this.page, pageSize: this.pageSize });
 
-                // 处理请求成功的响应
-                aotolog.log(response.data.message, "success", 2500);
-            } catch (error) {
-                // 处理请求失败的情况
-                console.error("Error:", error);
-                aotolog.log(response.data.message, "error", 2500);
+                if (!this.handlePost.code === 0) {
+                    this.handlePost.code = null;
+                    return aotolog.log(this.handlePost.message, "error", this.logTimeout);
+                }
+
+                this.commentList = this.handlePost.postCommentList;
+                this.handlePost.postCommentList = [];
+            } catch (err) {
+                console.log(err);
+            }
+        },
+        handleSubmit(event) {
+            event.preventDefault();
+            this.throttledComment();
+        },
+        async submitComment() {
+            try {
+                await this.handlePost.comment({ token: this.accessToken, pid: this.pid, content: this.text });
+
+                if (!this.handlePost.code === 0) {
+                    this.handlePost.code = null;
+                    return aotolog.log(this.handlePost.message, "error", this.logTimeout);
+                }
+
+                aotolog.log(this.handlePost.message, "success", this.logTimeout);
+                const newComment = {
+                    head: this.handleUser.userInfo.head,
+                    name: this.handleUser.userInfo.name,
+                    username: this.handleUser.userInfo.username,
+                    create_time: new Date(),
+                    content: this.text,
+                }
+                this.commentList = [newComment, ...this.commentList];
+            } catch (err) {
+                console.log(err);
             }
         },
     },
     mounted() {
         this.getDetailPost();
+        this.getPostComment();
         this.throttledLikes = this.throttle(this.handleLikes, 1000);
+        this.throttledComment = this.throttle(this.submitComment, 1000);
+
+        if (this.handlePost.postDetail.user_like_status === 1) {
+            this.isLike = true;
+        }
     },
 };
 </script>

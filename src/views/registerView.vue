@@ -68,6 +68,7 @@ export default {
         };
     },
     methods: {
+        // 动画 展示提示
         showUsernameHint() {
             let tl = gsap.timeline();
             tl.to(this.$refs.usernameHint, {
@@ -86,6 +87,7 @@ export default {
                 delay: 3,
             });
         },
+        // 倒计时
         startTimedown() {
             this.timeDown = 60;
             const timer = setInterval(() => {
@@ -98,6 +100,7 @@ export default {
                 }
             }, 1000);
         },
+        // 发送验证码
         async sendEmail() {
             if (this.email === null) {
                 aotolog.log("邮箱不能为空", "warn", this.logTimeout);
@@ -108,11 +111,11 @@ export default {
                 return;
             }
             try {
-                await this.handleEmail.email({
+                await this.handleEmail.sendEmail({
                     email: this.email,
                 });
 
-                if (!this.handleEmail.isSend) {
+                if (this.handleEmail.code === 0) {
                     aotolog.log(this.handleEmail.message, "error", this.logTimeout);
                     return;
                 }
@@ -123,39 +126,28 @@ export default {
                 console.log(err);
             }
         },
-        generateRandomString(length) {
-            const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-            let result = "";
-            const charactersLength = characters.length;
-            for (let i = 0; i < length; i++) {
-                result += characters.charAt(Math.floor(Math.random() * charactersLength));
-            }
-            return result;
-        },
+        // 处理注册
         async handleRegister() {
+            // 非空、格式验证
             if (this.email === null) {
-                aotolog.log("邮箱不能为空", "warn", this.logTimeout);
-                return;
+                return aotolog.log("邮箱不能为空", "warn", this.logTimeout);
             }
             if (this.code === null) {
-                aotolog.log("验证码不能为空", "warn", this.logTimeout);
-                return;
+                return aotolog.log("验证码不能为空", "warn", this.logTimeout);
             }
             if (this.username === null) {
-                aotolog.log("用户名不能为空", "warn", this.logTimeout);
-                return;
+                return aotolog.log("用户名不能为空", "warn", this.logTimeout);
             }
             if (this.password === null) {
-                aotolog.log("密码不能为空", "warn", this.logTimeout);
-                return;
+                return aotolog.log("密码不能为空", "warn", this.logTimeout);
             }
             const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
             if (!passwordRegex.test(this.password)) {
-                aotolog.log("密码必须至少包含一个小写字母、一个大写字母和一个数字，且长度为8-20位", "error", this.logTimeout);
-                return;
+                return aotolog.log("密码必须至少包含一个小写字母、一个大写字母和一个数字，且长度为8-20位", "error", this.logTimeout);
             }
 
-            const salt = this.username + this.password + 'typhon';
+            // 密码哈希加密
+            const salt = this.username + this.password + "typhon";
             const hashPassword = CryptoJS.SHA256(salt).toString();
             try {
                 await this.handleUser.register({
@@ -165,12 +157,11 @@ export default {
                     password: hashPassword,
                 });
 
-                if (!this.handleUser.isRegister) {
-                    aotolog.log(this.handleUser.message, "error", this.logTimeout);
-                    return;
+                if (this.handleUser.code === 0) {
+                    return aotolog.log(this.handleUser.message, "error", this.logTimeout);
                 }
 
-                this.handleUser.isRegister = false;
+                this.handleUser.code = null;
                 aotolog.log(this.handleUser.message, "success", this.logTimeout);
                 this.$router.push("/login");
             } catch (err) {
@@ -205,6 +196,7 @@ export default {
             // 计算验证码
             this.text = this.X * this.Y * this.Z;
         },
+        // 处理陀螺仪
         handleGyro() {
             if (!this.gyro) {
                 this.gyro = true;

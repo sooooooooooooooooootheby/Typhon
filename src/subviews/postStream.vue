@@ -2,7 +2,7 @@
     <topNav :title="topNavTitle" />
     <div class="postStream" v-on:scroll="handleScroll" ref="postStream">
         <div class="stream">
-            <card v-for="(pid, index) in post" :key="pid" :post="post[index]" />
+            <card v-for="(pid, index) in postList" :key="pid" :post="postList[index]" />
             <div class="loading" ref="loading">
                 <div class="spinner center" ref="loadingIcon" v-if="!message">
                     <div class="spinner-blade"></div>
@@ -42,60 +42,56 @@ export default {
             handlePost: post,
             accessToken: localStorage.getItem("accessToken"),
             page: 1,
-            pageSize: 100,
-            post: [],
-            newPost: [],
+            pageSize: 5,
+            postList: [],
+            newPostList: [],
             message: null,
             topNavTitle: "主页",
-            scrollTop: 0,
         };
     },
     methods: {
         async getPost() {
-            try {
-                await this.handlePost.getPost(this.accessToken, { page: this.page, pageSize: this.pageSize });
-                this.newPost = this.handlePost.postItem;
-                if (this.newPost.length > 0) {
-                    this.post = [...this.post, ...this.newPost];
-                    this.page++;
-                } else {
-                    this.message = "没有更多帖子了，或许你可以过段时间刷新一下";
+            if (this.accessToken) {
+                try {
+                    await this.handlePost.getPost({ token: this.accessToken, page: this.page, pageSize: this.pageSize });
+
+                    if (!this.handlePost.code === 0) {
+                        this.handlePost.code = null;
+                        return autolog.log(this.handlePost.message, "error", this.logTimeout);
+                    }
+
+                    this.newPostList = this.handlePost.postList;
+                    if (this.newPostList.length > 0) {
+                        this.postList = [...this.postList, ...this.newPostList];
+                        this.page++;
+                    } else {
+                        this.message = "没有更多帖子了，或许你可以过段时间刷新一下";
+                    }
+                } catch (err) {
+                    console.log(err);
                 }
-            } catch (err) {
-                console.log(err);
+                return;
             }
-        },
-        async getPostNoLogin() {
             try {
-                await this.handlePost.getPostNoLogin({ page: this.page, pageSize: this.pageSize });
-                this.post = this.handlePost.postItem;
+                await this.handlePost.getPost({});
+
+                if (!this.handlePost.code === 0) {
+                    this.handlePost.code = null;
+                    return autolog.log(this.handlePost.message, "error", this.logTimeout);
+                }
+
+                this.postList = this.handlePost.postList;
                 this.message = "登录查看更多帖子";
             } catch (err) {
                 console.log(err);
             }
         },
-        addScrollListener() {
-            const element = this.$refs.postStream;
-            element.addEventListener("scroll", this.handleScroll);
-        },
-        removeScrollListener() {
-            const element = this.$refs.postStream;
-            element.removeEventListener("scroll", this.handleScroll);
-        },
-        handleScroll() {
-            const element = this.$refs.postStream;
-            this.scrollTop = element.scrollTop;
-        },
     },
     mounted() {
-        if (this.accessToken) {
-            this.getPost();
-            setTimeout(() => {
-                observer.observe(this.$refs.loadingIcon);
-            }, 1000);
-        } else {
-            this.getPostNoLogin();
-        }
+        this.getPost();
+        setTimeout(() => {
+            observer.observe(this.$refs.loadingIcon);
+        }, 1000);
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
@@ -104,11 +100,6 @@ export default {
                 }
             });
         });
-
-        this.addScrollListener();
-    },
-    beforeDestroy() {
-        this.removeScrollListener();
     },
 };
 </script>

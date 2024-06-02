@@ -104,32 +104,20 @@ export default {
     methods: {
         async handleStatus(status) {
             try {
-                await this.handleUser.status({
-                    uid: this.handleUser.userInfo.uid,
+                await this.handleUser.updateStatus({
+                    token: this.accessToken,
                     status: status,
                 });
-                if (this.handleUser.message.code === 0) {
-                    aotolog.log(this.handleUser.message.message, "error", 2500);
-                    return;
+                if (this.handleUser.code === 0) {
+                    return aotolog.log(this.handleUser.message, "error", 2500);
                 }
-                aotolog.log(this.handleUser.message.message, "success", 2500);
+
+                aotolog.log(this.handleUser.message, "success", 2500);
                 this.isPro = false;
             } catch (error) {
                 console.log(error);
             }
         },
-    },
-    mounted() {
-        if (this.accessToken) {
-            const fetchData = async () => {
-                try {
-                    await this.handleUser.getTokenUserInfo(this.accessToken);
-                } catch (error) {
-                    console.error(error);
-                }
-            };
-            fetchData();
-        }
     },
 };
 </script>

@@ -106,6 +106,7 @@ export default {
             isUser: false,
             isSetting: false,
             isLogin: true,
+            accessToken: localStorage.getItem("accessToken")
         };
     },
     methods: {
@@ -133,11 +134,11 @@ export default {
             }
         },
         async handleLogout() {
-            localStorage.removeItem("accessToken");
-            localStorage.removeItem("refreshToken");
-            this.isLogin = false;
             try {
-                await this.handleUser.logout(this.handleUser.userInfo.uid);
+                await this.handleUser.logout({ token: this.accessToken });
+                localStorage.removeItem("accessToken");
+                localStorage.removeItem("refreshToken");
+                this.isLogin = false;
                 router.push("/login");
             } catch (error) {
                 console.log(error);

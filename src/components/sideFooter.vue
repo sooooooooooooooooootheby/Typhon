@@ -79,7 +79,7 @@ export default {
             if (regex.test(userStatus)) {
                 this.isStatus = false;
             }
-        }
+        },
     },
     mounted() {
         this.getNewUser();

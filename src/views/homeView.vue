@@ -16,6 +16,7 @@ import { jwtDecode } from "jwt-decode";
 import router from "@/router";
 import sideNav from "@/components/sideNav.vue";
 import write from "@/components/write.vue";
+import autolog from "autolog.js";
 
 export default {
     components: {
@@ -35,12 +36,17 @@ export default {
         cutWritePanel() {
             this.isWrite = !this.isWrite;
         },
-        async getTokenUserInfo() {
-            if (this.accessToken) {
-                const fetchData = async () => {
-                    await this.handleUser.getTokenUserInfo(this.accessToken);
-                };
-                fetchData();
+        // 获取用户信息
+        async getUserInfo() {
+            try {
+                await this.handleUser.getUserInfo({ token: this.accessToken });
+
+                if (!this.handleUser.code === 0) {
+                    this.handleUser.code = null;
+                    return autolog.log(this.handleUser.message, "error", this.logTimeout);
+                }
+            } catch (err) {
+                console.log(err);
             }
         },
         async verifyToken() {
@@ -49,38 +55,21 @@ export default {
             const time = Date.now();
 
             if (time >= accessTokenPayload) {
-                // accessToken 过期
-                console.log("accessToken 过期");
                 if (time >= refreshTokenPayload) {
-                    // refreshToken 过期
-                    console.log("refreshToken 过期");
-                    router.push("/login");
+                    return router.push("/login");
                 }
 
                 try {
-                    await this.handleUser.getAccessToken(this.refreshToken);
-                    if (this.handleUser.code === 1) {
-                        this.getTokenUserInfo();
-                    } else if (this.handleUser.code === 2) {
-                        router.push("/login");
-                    } else {
-                        console.log("未知code: " + this.handleUser.code);
-                    }
-                } catch (error) {
-                    console.log(error);
+                    await this.handleUser.updateAccessToken({ refreshToken: this.refreshToken });
+                } catch (err) {
+                    console.log(err);
                 }
-
-                return;
             }
-
-            // token 有效
-            this.getTokenUserInfo();
+            this.getUserInfo();
         },
     },
     mounted() {
-        if (this.accessToken) {
-            this.verifyToken();
-        }
+        this.verifyToken();
     },
 };
 </script>

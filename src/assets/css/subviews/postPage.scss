@@ -188,6 +188,7 @@
         }
 
         .comment {
+            min-height: calc(100vh - 59px);
             .message {
                 padding: 12px 0;
                 text-align: center;

@@ -16,8 +16,8 @@
                     <p v-html="compiledMarkdown"></p>
                 </blockquote>
 
-                <div v-if="post.post_cover" :class="{ landscape: isLandscape, portrait: isPortrait }">
-                    <img v-lazy="post.post_cover" alt="" ref="cover" @load="image" />
+                <div v-if="post.cover" :class="{ landscape: isLandscape, portrait: isPortrait }">
+                    <img v-lazy="post.cover" alt="" ref="cover" @load="image" />
                 </div>
             </div>
         </router-link>
@@ -49,11 +49,14 @@
 import markdownIt from "markdown-it";
 import axios from "axios";
 import aotolog from "autolog.js";
+import { postStore } from "@/stores/post.js";
 
 export default {
     props: ["post"],
     data() {
+        const post = postStore();
         return {
+            handlePost: post,
             create_time: null,
             markdownText: "# Hello, *world*!",
             compiledMarkdown: "",
@@ -110,36 +113,33 @@ export default {
         },
         showMarkdown() {
             const md = markdownIt();
-            this.compiledMarkdown = md.render(this.$props.post.post_content);
+            this.compiledMarkdown = md.render(this.$props.post.content);
         },
-        async addHeart(token, pid) {
+
+        async like(token, pid) {
             try {
-                const res = await axios.post(
-                    "/heart",
-                    { pid },
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                    }
-                );
+                await this.handlePost.like({ token: token, pid: pid });
+
+                if (!this.handlePost.code === 0) {
+                    this.handlePost.code = null;
+                    return aotolog.log(this.handlePost.message, "error", this.logTimeout);
+                }
+
                 this.isLike = true;
                 this.post.like_count++;
             } catch (error) {
                 aotolog.log(error.request.response, "warn", 2500);
             }
         },
-        async delHeart(token, pid) {
+        async unlike(token, pid) {
             try {
-                const res = await axios.post(
-                    "/noheart",
-                    { pid },
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                    }
-                );
+                await this.handlePost.unlike({ token: token, pid: pid });
+
+                if (!this.handlePost.code === 0) {
+                    this.handlePost.code = null;
+                    return aotolog.log(this.handlePost.message, "error", this.logTimeout);
+                }
+
                 this.isLike = false;
                 this.post.like_count--;
             } catch (error) {
@@ -159,13 +159,16 @@ export default {
             };
         },
         likes() {
+            // 调用节流函数
             this.throttledLikes();
         },
-        async handleLikes() {
+        handleLikes() {
             if (this.isLike) {
-                await this.delHeart(this.accessToken, this.post.pid);
+                this.unlike(this.accessToken, this.post.pid);
+                console.log(1);
             } else {
-                await this.addHeart(this.accessToken, this.post.pid);
+                this.like(this.accessToken, this.post.pid);
+                console.log(2);
             }
         },
     },
