@@ -170,5 +170,45 @@ export const userStore = defineStore({
                 console.log(err);
             }
         },
+        // 查询用户名和邮箱是否存在
+        async selectUsernameEmail({ retrieve }) {
+            try {
+                const res = await axios.get("/selectUsernameEmail", {
+                    params: {
+                        retrieve,
+                    },
+                });
+
+                if (res.data.code === 0) {
+                    this.code = res.data.code;
+                    return (this.message = res.data.message);
+                }
+
+                this.code = res.data.code;
+                this.message = res.data.hint;
+            } catch (err) {
+                console.log(err);
+            }
+        },
+        // 设置新密码
+        async setPassword({ retrieve, code, password }) {
+            try {
+                const res = await axios.post("/setPassword", {
+                    retrieve,
+                    code,
+                    password,
+                });
+
+                if (res.data.code === 0) {
+                    this.code = res.data.code;
+                    return (this.message = res.data.message);
+                }
+
+                this.code = res.data.code;
+                this.message = res.data.message;
+            } catch (err) {
+                console.log(err);
+            }
+        },
     },
 });

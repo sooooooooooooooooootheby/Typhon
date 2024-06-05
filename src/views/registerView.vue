@@ -147,8 +147,7 @@ export default {
             }
 
             // 密码哈希加密
-            const salt = this.username + this.password + "typhon";
-            const hashPassword = CryptoJS.SHA256(salt).toString();
+            const hashPassword = CryptoJS.SHA256(this.password).toString();
             try {
                 await this.handleUser.register({
                     email: this.email,
