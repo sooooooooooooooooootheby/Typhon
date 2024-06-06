@@ -23,6 +23,13 @@ axios.defaults.baseURL = "http://127.0.0.1:4000/api";
 
 const app = createApp(App);
 
+router.beforeEach((to, from, next) => {
+    if (to.meta.title) {
+        document.title = to.meta.title;
+    }
+    next();
+});
+
 app.use(createPinia());
 app.use(router);
 app.use(VueLazyload);

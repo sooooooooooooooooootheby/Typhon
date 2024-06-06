@@ -198,6 +198,7 @@ export default {
                 this.topNavTitle = this.handlePost.postDetail.name + " 的帖子";
                 this.postTime = this.handleTime(this.handlePost.postDetail.create_time);
                 this.author = { head: this.handlePost.postDetail.head, name: this.handlePost.postDetail.name, username: this.handlePost.postDetail.username, introduction: this.handlePost.postDetail.introduction };
+                document.title = `${this.author.name} 的帖子 | Typhon`;
             } catch (err) {
                 console.log(err);
             }

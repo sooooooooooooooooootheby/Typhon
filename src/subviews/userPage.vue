@@ -1,5 +1,5 @@
 <template>
-    <topNav :title="topNavTitle" :subTitle="topNavSubTitle" :show="show"/>
+    <topNav :title="topNavTitle" :subTitle="topNavSubTitle" :show="show" />
     <div class="userPage">
         <div class="user">
             <div class="info">
@@ -88,6 +88,7 @@ export default {
                 this.topNavSubTitle = this.handleUser.usersInfo.post_count + " 帖子  " + this.handleUser.usersInfo.like_count + " 喜欢";
                 this.uid = this.handleUser.usersInfo.uid;
                 this.usersInfo = this.handleUser.usersInfo;
+                document.title = `${this.usersInfo.name} (@${this.usersInfo.username}) | Typhon`;
             } catch (error) {
                 console.log(error);
             }
