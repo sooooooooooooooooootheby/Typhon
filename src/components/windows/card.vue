@@ -185,5 +185,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/css/components/card.scss";
+@import "@/assets/css/components/windows/card.scss";
 </style>

@@ -1,12 +1,25 @@
 @import "@/assets/css/_variables.scss";
 
 .settingPage {
-    width: 100%;
+    width: 961px;
     height: 100%;
     overflow: scroll;
     display: flex;
     .setting {
-        width: 590px;
-        padding: 20px 10px;
+        width: 941px;
+        padding: 20px 0px;
+        display: flex;
+        >ul {
+            width: 250px;
+            height: 100%;
+            padding: 0 10px;
+            border-right: 1px solid $border-color-light-1;
+        }
+        .main {
+            width: 651px;
+            height: 100%;
+            padding: 0 10px;
+            overflow: scroll;
+        }
     }
 }

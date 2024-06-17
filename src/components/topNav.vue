@@ -12,7 +12,7 @@
                 <p>{{ subTitle }}</p>
             </div>
         </div>
-        <div class="search">
+        <div class="search" v-if="!noSearch">
             <input type="text" />
         </div>
     </nav>
@@ -20,7 +20,7 @@
 
 <script>
 export default {
-    props: ["title", "subTitle", "show"],
+    props: ["title", "subTitle", "show", "noSearch"],
     data() {
         return {};
     },

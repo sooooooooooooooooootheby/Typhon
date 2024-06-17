@@ -15,7 +15,7 @@ import { userStore } from "@/stores/user.js";
 import { jwtDecode } from "jwt-decode";
 import router from "@/router";
 import sideNav from "@/components/sideNav.vue";
-import write from "@/components/write.vue";
+import write from "@/components/windows/write.vue";
 import autolog from "autolog.js";
 
 export default {

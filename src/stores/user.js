@@ -190,7 +190,7 @@ export const userStore = defineStore({
                 console.log(err);
             }
         },
-        // 设置新密码
+        // 找回密码
         async setPassword({ retrieve, code, password }) {
             try {
                 const res = await axios.post("/setPassword", {
@@ -210,5 +210,77 @@ export const userStore = defineStore({
                 console.log(err);
             }
         },
+        // 更新邮箱
+        async updateEmail({ token, email, code }) {
+            try {
+                const res = await axios.post(
+                    "/updateEmail",
+                    { email, code },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+
+                if (res.data.code === 0) {
+                    this.code = res.data.code;
+                    return (this.message = res.data.message);
+                }
+
+                this.code = res.data.code;
+                this.message = res.data.message;
+            } catch (err) {
+                console.log(err);
+            }
+        },
+        // 更新密码
+        async updatePassword({ token, oldPassword, newPassword }) {
+            try {
+                const res = await axios.post(
+                    "/updatePassword",
+                    { oldPassword, newPassword },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+
+                if (res.data.code === 0) {
+                    this.code = res.data.code;
+                    return (this.message = res.data.message);
+                }
+
+                this.code = res.data.code;
+                this.message = res.data.message;
+            } catch (err) {
+                console.log(err);
+            }
+        },
+        // 注销账户
+        async deleteUser({ token, email, password }) {
+            try {
+                const res = await axios.post(
+                    "/deleteUser",
+                    { email, password },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+
+                if (res.data.code === 0) {
+                    this.code = res.data.code;
+                    return (this.message = res.data.message);
+                }
+
+                this.code = res.data.code;
+                this.message = res.data.message;
+            } catch (err) {
+                console.log(err);
+            }
+        }
     },
 });

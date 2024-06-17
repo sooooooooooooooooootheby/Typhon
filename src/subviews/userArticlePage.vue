@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import card from "@/components/card.vue";
+import card from "@/components/windows/card.vue";
 import { postStore } from "@/stores/post.js";
 
 export default {

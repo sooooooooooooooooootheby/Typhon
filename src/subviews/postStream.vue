@@ -27,7 +27,7 @@
 
 <script>
 import { postStore } from "@/stores/post";
-import card from "@/components/card.vue";
+import card from "@/components/windows/card.vue";
 import topNav from "@/components/topNav.vue";
 import sideFooter from "@/components/sideFooter.vue";
 export default {

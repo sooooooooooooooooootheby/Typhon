@@ -120,5 +120,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/css/components/write.scss";
+@import "@/assets/css/components/windows/write.scss";
 </style>
