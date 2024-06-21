@@ -1,19 +1,20 @@
-$theme-color-light: #1b1b1b;
-$theme-color-dark: #ffffff;
-$theme-color-1: #845ec2;
-
+// 文本
 $font-color-dark: #ffffff;
 $font-color-light-1: #1b1b1b;
 $font-color-light-2: #3c3c43;
 $font-color-light-3: #3c3c43c7;
-
-$border-color-light-1: rgba(165, 165, 165, 0.2);
-$border-color-light-2: rgba(165, 165, 165, 0.8);
+$a-color-light: rgba(132, 94, 194, 1);
+$a-color-hover-light-0: rgba(132, 94, 194, 0.8);
+$a-color-hover-light-1: rgba(132, 94, 194, 0.6);
+// 边框
+$border-color-light-0: rgb(27, 27, 27);
 $border-color-light-3: rgb(236, 237, 236);
+$border-color-light-2: rgba(165, 165, 165, 0.8);
+$border-color-light-1: rgba(165, 165, 165, 0.2);
 $border-color-light-4: #845ec2;
-$border-color-light-5: #1B1B1B;
+$border-color-light-5: #FFFFFF;
 $border-color-light-6: #FFFFFF;
-
+// 背景色
 $background-color-light-0: #FFFFFF;
 $background-color-light-1: #1b1b1b;
 $background-color-hover-light: rgba(60, 60, 67, 0.1);
@@ -21,49 +22,9 @@ $background-color-hover-light-1: rgba(186, 186, 189, 0.1);
 
 $transition-1: .2s;
 
-// 按钮
-@mixin buttonMain($white: #ffffff, $black: #1b1b1b) {
-    background-color: $black;
-    border: 2px solid $black;
-    color: $white;
-}
-@mixin buttonHover($white: #ffffff, $black: #1b1b1b) {
-    background-color: $white;
-    border: 2px solid $black;
-    color: $black;
-}
-@mixin buttonActive($white: #ffffff, $black: #1b1b1b) {
-    border: 2px solid $white;
-}
-@mixin button {
-    button {
-        appearance: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        border: 0px;
-        @include buttonMain;
-        transition: 0.2s;
-    }
-    button:hover {
-        @include buttonHover;
-    }
-    button:active {
-        @include buttonActive;
-    }
-}
+// 调色板
+$red-color-1: #e61d1d;
+$red-color-2:rgba(253, 180, 184, 0.5);
 
-@mixin a {
-    a {
-        color: $font-color-light-2;
-        transition: 0.2s;
-    }
-    a:hover {
-        color: $font-color-light-3;
-    }
-}
-
-@mixin flexCenter {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+$blue-color-1: #1d59e6;
+$blue-color-2: rgba(180, 226, 253, 0.5);

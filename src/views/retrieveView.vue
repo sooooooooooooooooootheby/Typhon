@@ -11,7 +11,7 @@
                     <span>Your username & email</span>
                     <input type="text" v-model="retrieve" />
                 </div>
-                <button type="submit">Next</button>
+                <button type="submit">下一个</button>
             </form>
             <form @submit.prevent="handleSetPassword" v-else>
                 {{ handleUser.message }}
@@ -19,12 +19,19 @@
                     <span>Your email code</span>
                     <input type="text" v-model="code" />
                     <span>new password</span>
-                    <input type="password" v-model="password" />
+                    <div class="password">
+                        <input :type="inputValue" v-model="password" />
+                        <button type="button" @click="showPassword">
+                            <svg class="icon" aria-hidden="true">
+                                <use :xlink:href="hrefValue"></use>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
-                <button type="submit">Submit</button>
+                <button type="submit">提交</button>
             </form>
             <div class="retrieve">
-                <router-link to="/login">想起密码了?</router-link>
+                <router-link to="/login">想起密码？</router-link>
             </div>
         </div>
     </div>
@@ -42,9 +49,11 @@ export default {
             handleUser: user,
             isCode: true,
             retrieve: null,
-            retrieveText: "忘记密码?",
             code: null,
             password: null,
+            inputValue: "password",
+            hrefValue: "#eye-open",
+            isEye: true,
         };
     },
     methods: {
@@ -98,7 +107,18 @@ export default {
             } catch (err) {
                 console.log(err);
             }
-
+        },
+        // 显示密码
+        showPassword() {
+            if (this.isEye) {
+                this.hrefValue = "#eye-closed";
+                this.inputValue = "text";
+                this.isEye = false;
+            } else {
+                this.hrefValue = "#eye-open";
+                this.inputValue = "password";
+                this.isEye = true;
+            }
         },
     },
 };

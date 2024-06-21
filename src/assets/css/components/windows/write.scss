@@ -1,4 +1,6 @@
 @import "@/assets/css/_variables.scss";
+@import "@/assets/css/module.scss";
+
 .bg {
     width: 100vw;
     height: 100vh;
@@ -96,7 +98,7 @@
                 button {
                     padding: 10px 14px;
                     margin-right: 24px;
-                    border-radius: 99px;
+                    border-radius: 99px !important;
                 }
                 @include button;
             }

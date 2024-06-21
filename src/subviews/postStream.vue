@@ -3,21 +3,8 @@
     <div class="postStream" v-on:scroll="handleScroll" ref="postStream">
         <div class="stream">
             <card v-for="(pid, index) in postList" :key="pid" :post="postList[index]" />
-            <div class="loading" ref="loading">
-                <div class="spinner center" ref="loadingIcon" v-if="!message">
-                    <div class="spinner-blade"></div>
-                    <div class="spinner-blade"></div>
-                    <div class="spinner-blade"></div>
-                    <div class="spinner-blade"></div>
-                    <div class="spinner-blade"></div>
-                    <div class="spinner-blade"></div>
-                    <div class="spinner-blade"></div>
-                    <div class="spinner-blade"></div>
-                    <div class="spinner-blade"></div>
-                    <div class="spinner-blade"></div>
-                    <div class="spinner-blade"></div>
-                    <div class="spinner-blade"></div>
-                </div>
+            <div class="loadingBox" ref="loading">
+                <div class="loader" v-if="!message"></div>
                 <span>{{ message }}</span>
             </div>
         </div>
@@ -89,10 +76,7 @@ export default {
     },
     mounted() {
         this.getPost();
-        setTimeout(() => {
-            observer.observe(this.$refs.loadingIcon);
-        }, 1000);
-
+        
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
@@ -100,6 +84,10 @@ export default {
                 }
             });
         });
+
+        setTimeout(() => {
+            observer.observe(this.$refs.loading);
+        }, 1000);
     },
 };
 </script>

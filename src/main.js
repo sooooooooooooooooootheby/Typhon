@@ -1,6 +1,6 @@
 import "./assets/css/main.scss";
 // iconfont 图标包
-import "//at.alicdn.com/t/c/font_4516886_nspxqg17n7.js";
+import "//at.alicdn.com/t/c/font_4516886_pbr2y1xhmzq.js";
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";

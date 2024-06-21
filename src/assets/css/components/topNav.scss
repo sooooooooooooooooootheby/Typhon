@@ -1,17 +1,19 @@
 @import "@/assets/css/_variables.scss";
 
 .topNav {
-    width: 100%;
+    width: 961px;
     height: 58px;
     display: flex;
     position: fixed;
+    justify-content: space-between;
     z-index: 999;
+
     .menu {
         width: 610px;
         display: flex;
         align-items: center;
-        border-right: 1px solid $border-color-light-1;
         border-bottom: 1px solid $border-color-light-1;
+        border-right: 1px solid $border-color-light-1;
         background-color: $background-color-light-0;
 
         .back {
@@ -20,45 +22,56 @@
             border-radius: 999px;
             transition: $transition-1;
         }
+
         .back:hover {
             background-color: $background-color-hover-light;
         }
+
         .title {
             height: 100%;
             margin-left: 24px;
 
             span {
                 line-height: 58px;
-                font-size: 18px;
+                font-size: 20px;
                 font-weight: bold;
                 color: $font-color-light-1;
             }
         }
+
         .subTitle {
             height: 100%;
             margin-left: 24px;
             display: flex;
             justify-content: center;
             flex-direction: column;
+
             span {
                 font-size: 20px;
                 font-weight: bold;
                 color: $font-color-light-1;
             }
+
             p {
                 font-size: 13px;
                 color: $font-color-light-2;
             }
         }
     }
+
+    .noSearch {
+        width: 320px;
+        border-bottom: none;
+    }
+
     .search {
-        width: 321px;
-        padding-left: 30px;
+        width: 350px;
         display: flex;
         justify-content: center;
         align-items: center;
+
         input {
-            width: 100%;
+            width: 70%;
             height: 28px;
             padding: 4px 12px;
             outline: none;

@@ -1,28 +1,97 @@
 <template>
     <div class="bg" @click="this.$parent.cutEmailPanel()">
         <div class="writePanel" onclick="event.stopPropagation()">
-            <div class="email" v-if="cardParameter === 'email'">
-                <span>修改你的邮箱</span>
-                <label>新的邮箱<input type="text" v-model="email" /></label>
+            <div v-if="cardParameter === 'email'">
+                <div>
+                    <div class="iconBox">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#mail"></use>
+                        </svg>
+                    </div>
+                    <span>修改你的邮箱</span>
+                </div>
                 <label>
-                    邮箱验证码
-                    <input type="text" v-model="code" />
-                    <button @click="sendEmail">{{ time }}</button>
+                    <span>新的邮箱</span>
+                    <input type="text" v-model="email" />
                 </label>
-                <button @click="handleUpdateEmail">提交</button>
+                <label>
+                    <span>邮箱验证码</span>
+                    <div class="code">
+                        <input type="text" v-model="code" />
+                        <button @click="sendEmail">{{ time }}</button>
+                    </div>
+                </label>
+                <button class="submit" @click="handleUpdateEmail">提交</button>
             </div>
-            <div class="email" v-if="cardParameter === 'password'">
-                <span>修改你的密码</span>
-                <label>旧的密码<input type="password" v-model="oldPassword" /></label>
-                <label>新的密码<input type="password" v-model="newPassword1" /></label>
-                <label>再次输入新的密码<input type="password" v-model="newPassword2" /></label>
-                <button @click="handleUpdatePassword">提交</button>
+            <div v-if="cardParameter === 'password'">
+                <div>
+                    <div class="iconBox">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#password"></use>
+                        </svg>
+                    </div>
+                    <span>修改你的密码</span>
+                </div>
+                <label>
+                    <span>旧的密码</span>
+                    <div class="password">
+                        <input :type="inputValue1" v-model="oldPassword" />
+                        <button type="button" @click="showPassword(1)">
+                            <svg class="icon" aria-hidden="true">
+                                <use :xlink:href="hrefValue1"></use>
+                            </svg>
+                        </button>
+                    </div>
+                </label>
+                <label>
+                    <span>新的密码</span>
+                    <div class="password">
+                        <input :type="inputValue2" v-model="newPassword1" />
+                        <button type="button" @click="showPassword(2)">
+                            <svg class="icon" aria-hidden="true">
+                                <use :xlink:href="hrefValue2"></use>
+                            </svg>
+                        </button>
+                    </div>
+                </label>
+                <label>
+                    <span>再次输入新的密码</span>
+                    <div class="password">
+                        <input :type="inputValue3" v-model="newPassword2" />
+                        <button type="button" @click="showPassword(3)">
+                            <svg class="icon" aria-hidden="true">
+                                <use :xlink:href="hrefValue3"></use>
+                            </svg>
+                        </button>
+                    </div>
+                </label>
+                <button class="submit" @click="handleUpdatePassword">提交</button>
             </div>
-            <div class="email" v-if="cardParameter === 'deleteUser'">
-                <span>注销你的账户</span>
-                <label>邮箱<input type="text" v-model="email" /></label>
-                <label>密码<input type="password" v-model="password" /></label>
-                <button @click="handleDeleteUser">提交</button>
+            <div v-if="cardParameter === 'deleteUser'">
+                <div>
+                    <div class="iconBox red">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#delete"></use>
+                        </svg>
+                    </div>
+                    <span>注销你的账户</span>
+                </div>
+                <label>
+                    <span>邮箱</span>
+                    <input type="text" v-model="email" />
+                </label>
+                <label>
+                    <span>密码</span>
+                    <div class="password">
+                        <input :type="inputValue3" v-model="password" />
+                        <button type="button" @click="showPassword(3)">
+                            <svg class="icon" aria-hidden="true">
+                                <use :xlink:href="hrefValue3"></use>
+                            </svg>
+                        </button>
+                    </div>
+                </label>
+                <button class="submit" @click="handleDeleteUser">提交</button>
             </div>
         </div>
     </div>
@@ -45,12 +114,21 @@ export default {
             token: localStorage.getItem("accessToken"),
             email: null,
             code: null,
-            time: "send",
+            time: "发送",
             timeDown: 0,
             oldPassword: null,
             newPassword1: null,
             newPassword2: null,
             password: null,
+            inputValue1: "password",
+            inputValue2: "password",
+            inputValue3: "password",
+            hrefValue1: "#eye-open",
+            hrefValue2: "#eye-open",
+            hrefValue3: "#eye-open",
+            isEye1: true,
+            isEye2: true,
+            isEye3: true,
         };
     },
     methods: {
@@ -62,7 +140,7 @@ export default {
                     this.timeDown--;
                     this.time = this.timeDown;
                 } else {
-                    this.time = "send";
+                    this.time = "发送";
                     clearInterval(timer);
                 }
             }, 1000);
@@ -210,6 +288,47 @@ export default {
                 router.push("/login");
             } catch (err) {
                 console.log(err);
+            }
+        },
+        // 显示密码
+        showPassword(key) {
+            let inputValue;
+            switch (key) {
+                case 1:
+                    if (this.isEye1) {
+                        this.hrefValue1 = "#eye-closed";
+                        this.inputValue1 = "text";
+                        this.isEye1 = false;
+                    } else {
+                        this.hrefValue1 = "#eye-open";
+                        this.inputValue1 = "password";
+                        this.isEye1 = true;
+                    }
+                    break;
+                case 2:
+                    if (this.isEye2) {
+                        this.hrefValue2 = "#eye-closed";
+                        this.inputValue2 = "text";
+                        this.isEye2 = false;
+                    } else {
+                        this.hrefValue2 = "#eye-open";
+                        this.inputValue2 = "password";
+                        this.isEye2 = true;
+                    }
+                    break;
+                case 3:
+                    if (this.isEye3) {
+                        this.hrefValue3 = "#eye-closed";
+                        this.inputValue3 = "text";
+                        this.isEye3 = false;
+                    } else {
+                        this.hrefValue3 = "#eye-open";
+                        this.inputValue3 = "password";
+                        this.isEye3 = true;
+                    }
+                    break;
+                default:
+                    break;
             }
         },
     },

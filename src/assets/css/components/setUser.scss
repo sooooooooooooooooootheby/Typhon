@@ -1,4 +1,6 @@
 @import "@/assets/css/_variables.scss";
+@import "@/assets/css/module.scss";
+
 .bg {
     width: 100vw;
     height: 100vh;
@@ -42,7 +44,7 @@
             button {
                 padding: 5px 14px;
                 margin: 20px;
-                border-radius: 99px;
+                border-radius: 99px !important;
             }
             @include button;
         }
@@ -128,7 +130,7 @@
                     padding: 8px;
                     display: flex;
                     flex-direction: column;
-                    border: 1px solid $border-color-light-5;
+                    border: 1px solid $border-color-light-1;
                     border-radius: 8px;
                     > div {
                         display: flex;

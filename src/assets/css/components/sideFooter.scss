@@ -1,4 +1,5 @@
 @import "@/assets/css/_variables.scss";
+@import "@/assets/css/module.scss";
 
 .sideFooter {
     width: 320px;
@@ -7,43 +8,51 @@
     position: sticky;
     top: 0;
     border-left: 1px solid $border-color-light-1;
-    > div {
+
+    >div {
         margin: 10px 0;
         padding: 12px;
         border: 1px solid $border-color-light-1;
         border-radius: 16px;
     }
+
     .author {
         .title {
             font-size: 20px;
             font-weight: bold;
             color: $font-color-light-1;
         }
+
         a {
             margin-top: 8px;
             display: flex;
             text-decoration: none;
+
             .head {
                 width: 42px;
                 height: 42px;
                 margin-right: 6px;
                 flex-shrink: 0;
+
                 img {
                     width: 100%;
                     height: 100%;
                     border-radius: 42px;
                 }
             }
+
             .text {
                 span {
                     color: $font-color-light-1;
                     font-weight: bold;
                     font-size: 16px;
                 }
+
                 p {
                     color: $font-color-light-2;
                     font-size: 14px;
                 }
+
                 blockquote {
                     color: $font-color-light-1;
                     font-size: 15px;
@@ -51,19 +60,23 @@
             }
         }
     }
+
     .login {
         span {
             font-size: 20px;
             font-weight: bold;
             color: $font-color-light-1;
         }
+
         p {
             font-size: 14px;
             color: $font-color-light-2;
             line-height: 26px;
         }
+
         .buttonBox {
             @include button;
+
             button {
                 width: 250px;
                 margin: 5px 0;
@@ -72,56 +85,69 @@
             }
         }
     }
+
     .status {
         span {
             font-size: 20px;
             font-weight: bold;
             color: $font-color-light-1;
         }
+
         p {
             font-size: 14px;
             color: $font-color-light-2;
             margin: 5px 0;
         }
+
         @include button;
+
         button {
             padding: 8px 18px;
             border-radius: 999px;
         }
     }
+
     .newUser {
         padding: 12px 0;
+
         .title {
             margin-left: 12px;
             font-size: 20px;
             font-weight: bold;
             color: $font-color-light-1;
         }
+
         ul {
             margin: 10px 0;
+
             li {
                 padding: 10px;
                 list-style: none;
                 transition: 0.2s;
+
                 a {
                     display: flex;
                     text-decoration: none;
+
                     .head {
                         width: 42px;
                         height: 42px;
                         margin-right: 10px;
+
                         img {
                             width: 100%;
                             height: 100%;
                             border-radius: 42px;
                         }
                     }
+
                     .text {
                         span {
                             color: $font-color-light-1;
                             font-weight: bold;
                             font-size: 16px;
                         }
+
                         p {
                             color: $font-color-light-2;
                             font-size: 14px;
@@ -129,6 +155,7 @@
                     }
                 }
             }
+
             li:hover {
                 background-color: $background-color-hover-light;
             }

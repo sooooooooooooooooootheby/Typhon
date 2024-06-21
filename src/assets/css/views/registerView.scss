@@ -1,4 +1,5 @@
 @import "@/assets/css/_variables.scss";
+@import "@/assets/css/module.scss";
 
 .loginAndRegister {
     width: 100vw;
@@ -9,50 +10,70 @@
         width: 45%;
         height: 100%;
     }
+
     .logo {
         @include flexCenter;
+
         svg {
             font-size: 400px;
         }
     }
+
     .panel {
         display: flex;
         justify-content: center;
         align-items: start;
         flex-direction: column;
+
         .title {
-            font-size: 40px;
+            font-size: 50px;
             font-weight: bold;
             color: $font-color-light-1;
         }
-        .title:nth-child(1) {
-            font-size: 60px;
+
+        .subTitle {
+            font-size: 30px;
+            color: $font-color-light-2;
         }
+
         form {
             margin: 20px 0;
+
             >div {
                 display: flex;
                 flex-direction: column;
+
                 span {
                     color: $font-color-light-2;
-                    a {
-                        text-decoration: dashed;
-                        cursor: pointer;
-                        color: $font-color-light-1;
-                        transition: $transition-1;
-                    }
-                    a:hover {
-                        color: $theme-color-1;
-                    }
+                    @include a;
                 }
+
                 input {
                     width: 300px;
-                    padding: 8px;
-                    outline: none;
-                    border: 1px solid $border-color-light-3;
-                    border-radius: 8px;
                     position: relative;
                 }
+
+                @include input;
+
+                .password {
+                    display: flex;
+                    input {
+                        width: 248px;
+                        margin-right: 2px;
+                    }
+
+                    button {
+                        width: 50px;
+                        height: 39px;
+                        margin: 0;
+                        @include flexCenter;
+
+                        svg {
+                            font-size: 22px;
+                        }
+                    }
+                }
+
                 .usernameHint {
                     position: absolute;
                     opacity: 0;
@@ -63,23 +84,30 @@
                     padding: 4px 8px;
                 }
             }
+
             .code {
                 input {
-                    width: 184px;
+                    width: 176px;
                 }
+
                 button {
-                    width: 56px;
-                    margin: 0 2px;
+                    width: 60px;
+                    padding: 6px;
+                    margin-left: 2px;
                 }
+
+                @include button;
             }
-            button {
+
+            .submit {
                 width: 316px;
                 margin: 24px 0;
                 padding: 8px;
-                border-radius: 8px;
             }
+
             @include button;
         }
+
         .register {
             color: $font-color-light-1;
             @include a;

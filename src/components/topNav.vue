@@ -1,6 +1,6 @@
 <template>
     <nav class="topNav">
-        <div class="menu">
+        <div :class="{ menu: true , noSearch: noSearch}">
             <svg class="icon back" aria-hidden="true" @click="$router.back()" v-if="show">
                 <use xlink:href="#arrow-back"></use>
             </svg>

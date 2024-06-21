@@ -6,8 +6,8 @@
             </svg>
         </div>
         <div class="panel" ref="panel">
-            <!-- <p class="title">Let's have</p> -->
-            <!-- <p class="title">a party then!</p> -->
+            <p class="title">Create</p>
+            <p class="subTitle">your account</p>
             <form @submit.prevent="handleRegister">
                 <div class="input">
                     <span>Email</span>
@@ -17,7 +17,7 @@
                     <span>code</span>
                     <div>
                         <input type="text" v-model="code" />
-                        <button type="button" @click="handleGyro" ref="gyro">Gyro</button>
+                        <button type="button" @click="handleGyro" ref="gyro">陀螺仪</button>
                         <button type="button" @click="sendEmail">{{ time }}</button>
                     </div>
                 </div>
@@ -28,12 +28,19 @@
                 </div>
                 <div class="input">
                     <span>Password</span>
-                    <input type="password" v-model="password" />
+                    <div class="password">
+                        <input :type="inputValue" v-model="password" />
+                        <button type="button" @click="showPassword">
+                            <svg class="icon" aria-hidden="true">
+                                <use :xlink:href="hrefValue"></use>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
-                <button type="submit">Register</button>
+                <button class="submit" type="submit">创建！</button>
             </form>
             <div class="register">
-                <span>Already have an account? <router-link to="/login">Direct login</router-link></span>
+                <span>已经有账号了？ <router-link to="/login">去登录！</router-link></span>
             </div>
         </div>
     </div>
@@ -63,8 +70,11 @@ export default {
             X: 0,
             Y: 0,
             Z: 0,
-            time: "send",
+            time: "发送",
             timeDown: 0,
+            inputValue: "password",
+            hrefValue: "#eye-open",
+            isEye: true,
         };
     },
     methods: {
@@ -95,7 +105,7 @@ export default {
                     this.timeDown--;
                     this.time = this.timeDown;
                 } else {
-                    this.time = "send";
+                    this.time = "发送";
                     clearInterval(timer);
                 }
             }, 1000);
@@ -208,6 +218,18 @@ export default {
                 this.$refs.gyro.style.backgroundColor = "#1B1B1B";
                 this.$refs.gyro.style.color = "#FFFFFF";
                 window.removeEventListener("deviceorientation", this.updateGravity, false);
+            }
+        },
+        // 显示密码
+        showPassword() {
+            if (this.isEye) {
+                this.hrefValue = "#eye-closed";
+                this.inputValue = "text";
+                this.isEye = false;
+            } else {
+                this.hrefValue = "#eye-open";
+                this.inputValue = "password";
+                this.isEye = true;
             }
         },
     },

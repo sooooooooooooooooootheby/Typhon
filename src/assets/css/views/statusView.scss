@@ -1,4 +1,5 @@
 @import "@/assets/css/_variables.scss";
+@import "@/assets/css/module.scss";
 
 .pro {
     width: 100vw;
@@ -22,7 +23,7 @@
         top: -200px;
         left: 50%;
         transform: translate(-50%, 0);
-        background-color: $theme-color-1;
+        background-color: $a-color-light;
         border-radius: 200px;
         filter: blur(120px);
         animation: anime 10s;
@@ -60,7 +61,7 @@
             font-size: 18px;
             color: $font-color-light-2;
             a {
-                color: $theme-color-1;
+                color: $a-color-light;
             }
         }
         p:nth-child(3) {

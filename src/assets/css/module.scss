@@ -1,0 +1,76 @@
+// 按钮
+@mixin buttonMain($white: $background-color-light-0, $black: $background-color-light-1) {
+    background-color: $black;
+    border: 2px solid $black;
+    color: $white;
+}
+
+@mixin buttonHover($white: $background-color-light-0, $black: $background-color-light-1) {
+    background-color: $white;
+    border: 2px solid $black;
+    color: $black;
+}
+
+@mixin buttonActive($white: $background-color-light-0, $black: $background-color-light-1) {
+    border: 2px solid $white;
+}
+
+@mixin button {
+    button {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        border: 0px;
+        @include buttonMain;
+        transition: $transition-1;
+        border-radius: 8px;
+    }
+
+    button:hover {
+        @include buttonHover;
+    }
+
+    button:active {
+        @include buttonActive;
+    }
+}
+
+// 输入框
+
+@mixin input {
+    input {
+        padding: 8px;
+        outline: none;
+        border: 2px solid $border-color-light-3;
+        border-radius: 8px;
+        transition: $transition-1;
+    }
+    input:focus {
+        border: 2px solid $border-color-light-0;
+    }
+}
+
+// a标签
+
+@mixin a {
+    a {
+        color: $a-color-hover-light-1;
+        transition: 0.2s;
+    }
+
+    a:hover {
+        color: $a-color-light;
+    }
+
+    a:active {
+        color: $a-color-hover-light-0;
+    }
+}
+
+// flex居中
+
+@mixin flexCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

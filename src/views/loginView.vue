@@ -6,8 +6,8 @@
             </svg>
         </div>
         <div class="panel" ref="panel">
-            <p class="title">Welcome to</p>
-            <!-- <p class="title">Typhon's Movie Party!</p> -->
+            <p class="title">Welcome</p>
+            <span class="subTitle">Join in</span>
             <form @submit.prevent="handleLogin" v-if="isRetrieve">
                 <div class="input">
                     <span>Username</span>
@@ -15,31 +15,22 @@
                 </div>
                 <div class="input">
                     <span>Password</span>
-                    <input type="password" v-model="password" />
+                    <div class="password">
+                        <input :type="inputValue" v-model="password" />
+                        <button type="button" @click="showPassword">
+                            <svg class="icon" aria-hidden="true">
+                                <use :xlink:href="hrefValue"></use>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
-                <button type="submit">Login</button>
-            </form>
-            <form @submit.prevent="handleRetrieve" v-else-if="!isCode">
-                <div class="input">
-                    <span>Your username & email</span>
-                    <input type="text" v-model="retrieve" />
-                </div>
-                <button type="submit">Next</button>
-            </form>
-            <form @submit.prevent="handleRetrieve" v-else>
-                <div class="input">
-                    <span>Your email code</span>
-                    <input type="text" v-model="code" />
-                    <span>new password</span>
-                    <input type="password" v-model="newPassword" />
-                </div>
-                <button type="submit">Submit</button>
+                <button type="submit">登录</button>
             </form>
             <div class="retrieve">
-                <router-link to="/retrieve">忘记密码了?</router-link>
+                <router-link to="/retrieve">忘记密码？</router-link>
             </div>
             <div class="register" v-if="isRetrieve">
-                <span>Get started with our app, <br />just <router-link to="/register">create an account</router-link> and enjoy the experience.</span>
+                <span>初来乍到？<router-link to="/register">创建账户</router-link>加入我们！</span>
             </div>
         </div>
     </div>
@@ -62,6 +53,9 @@ export default {
             retrieve: null,
             retrieveText: "忘记密码?",
             isCode: false,
+            inputValue: "password",
+            hrefValue: "#eye-open",
+            isEye: true,
         };
     },
     methods: {
@@ -123,36 +117,17 @@ export default {
             this.isRetrieve = true;
             this.retrieveText = "忘记密码?";
         },
-        // 处理查询用户名或邮箱
-        async handleRetrieve() {
-            // if (this.retrieve === null) {
-            //     return aotolog.log("用户名 & 邮箱不能为空", "warn", this.logTimeout);
-            // }
-
-            // const usernameRegex = /^[a-zA-Z0-9_-]{3,16}$/;
-            // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            // if (!usernameRegex.test(this.retrieve) && !emailRegex.test(this.retrieve)) {
-            //     return aotolog.log("格式错误", "warn", this.logTimeout);
-            // }
-
-            // let type = "username";
-            // if (emailRegex.test(this.retrieve)) {
-            //     console.log(1);
-            //     type = "email";
-            // }
-
-            // try {
-            //     await this.handleUser.selectUsernameEmail({ retrieve: this.retrieve, type: type });
-
-            //     if (this.handleUser.code === 0) {
-            //         return aotolog.log(this.handleUser.message, "error", this.logTimeout);
-            //     }
-
-            //     aotolog.log(this.handleUser.message, "success", this.logTimeout);
-            // } catch (err) {
-            //     console.log(err);
-            // }
-            this.isCode = true;
+        // 显示密码
+        showPassword() {
+            if (this.isEye) {
+                this.hrefValue = "#eye-closed";
+                this.inputValue = "text";
+                this.isEye = false;
+            } else {
+                this.hrefValue = "#eye-open";
+                this.inputValue = "password";
+                this.isEye = true;
+            }
         },
     },
 };

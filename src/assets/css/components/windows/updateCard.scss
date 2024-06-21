@@ -1,4 +1,5 @@
 @import "@/assets/css/_variables.scss";
+@import "@/assets/css/module.scss";
 
 .bg {
     width: 100vw;
@@ -13,8 +14,7 @@
     align-items: center;
 
     .writePanel {
-        width: 400px;
-        height: 420px;
+        padding: 50px 60px;
         background-color: #ffffff;
         border-radius: 16px;
         overflow: hidden;
@@ -25,7 +25,93 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+
+            >div {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-bottom: 40px;
+
+                .iconBox {
+                    margin-bottom: 10px;
+                    background-color: $blue-color-2;
+                    border-radius: 18px;
+
+                    svg {
+                        padding: 20px;
+                        font-size: 40px;
+                        color: $blue-color-1;
+                    }
+                }
+
+                .red {
+                    background-color: $red-color-2;
+
+                    svg {
+                        color: $red-color-1;
+                    }
+                }
+
+                span {
+                    font-size: 22px;
+                }
+            }
+
+            label {
+                display: flex;
+                flex-direction: column;
+
+                span {
+                    color: $font-color-light-1;
+                }
+
+                input {
+                    width: 220px;
+                }
+
+                @include input;
+
+                button {
+                    width: 60px;
+                    padding: 7px;
+                    margin-left: 2px;
+                }
+
+                @include button;
+
+                .code {
+                    input {
+                        width: 158px;
+                    }
+                }
+
+                .password {
+                    display: flex;
+                    input {
+                        width: 170px;
+                        margin-right: 2px;
+                    }
+
+                    button {
+                        width: 50px;
+                        height: 39px;
+                        margin: 0;
+                        @include flexCenter;
+
+                        svg {
+                            font-size: 22px;
+                        }
+                    }
+                }
+            }
+
+            .submit {
+                width: 240px;
+                padding: 7px;
+                margin-top: 20px;
+            }
+
+            @include button;
         }
     }
 }

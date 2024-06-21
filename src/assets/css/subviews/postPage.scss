@@ -1,4 +1,5 @@
 @import "@/assets/css/_variables.scss";
+@import "@/assets/css/module.scss";
 
 .postPage {
     width: 100%;
@@ -182,7 +183,7 @@
             button {
                 margin: 8px 0;
                 padding: 8px 14px;
-                border-radius: 99px;
+                border-radius: 99px !important;
             }
             @include button;
         }

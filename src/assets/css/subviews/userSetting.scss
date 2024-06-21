@@ -1,0 +1,70 @@
+@import "@/assets/css/_variables.scss";
+@import "@/assets/css/module.scss";
+
+.title {
+    height: 58px;
+    padding-left: 24px;
+    line-height: 58px;
+    font-size: 20px;
+    font-weight: bold;
+    color: $font-color-light-1;
+}
+
+.user {
+    width: 100%;
+    height: calc(100% - 68px);
+    padding: 10px 0px 0px;
+
+    a {
+        color: $a-color-light;
+    }
+
+    .userSetting {
+        ul {
+            padding: 15px 0;
+            border-bottom: 1px solid $border-color-light-3;
+
+            .subTitle {
+                margin: 0 10px;
+                font-size: 20px;
+
+                svg {
+                    margin-right: 4px;
+                }
+            }
+
+            li {
+                margin: 5px 0;
+                padding: 5px 10px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                list-style: none;
+                cursor: pointer;
+
+                div {
+                    span {
+                        font-size: 17px;
+                        color: $font-color-light-1;
+                    }
+                    p {
+                        font-size: 15px;
+                        color: $font-color-light-2;
+                    }
+                }
+
+                svg {
+                    color: $font-color-light-3;
+                }
+            }
+
+            li:hover {
+                background-color: $background-color-hover-light-1;
+            }
+
+            >p {
+                margin: 0 10px;
+            }
+        }
+    }
+}

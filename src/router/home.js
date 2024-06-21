@@ -1,3 +1,5 @@
+import setting from "./setting";
+
 const home = [
     {
         path: "",
@@ -65,6 +67,7 @@ const home = [
     {
         path: "/setting",
         name: "setting",
+        children: [...setting],
         component: () => import("@/subviews/settingPage.vue"),
     },
 ];

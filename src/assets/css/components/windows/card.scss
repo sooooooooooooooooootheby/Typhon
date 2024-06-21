@@ -1,4 +1,5 @@
 @import "@/assets/css/_variables.scss";
+@import "@/assets/css/module.scss";
 
 .card {
     width: 590px;
@@ -105,34 +106,34 @@
         .isLike {
             button {
                 svg {
-                    color: rgb(249, 24, 128);
+                    color: $red-color-1;
                 }
             }
             p {
-                color: rgb(249, 24, 128);
+                color: $red-color-1;
             }
         }
         .heartIcon:hover {
             button {
-                background-color: rgba(249, 24, 128, 0.1);
+                background-color: $red-color-2;
                 svg {
-                    color: rgb(249, 24, 128);
+                    color: $red-color-1;
                 }
             }
             p {
-                color: rgb(249, 24, 128);
+                color: $red-color-1;
             }
         }
         .commentIcon:hover {
             a {
-                background-color: rgba(29, 155, 240, 0.1);
+                background-color: $blue-color-2;
                 text-decoration: none;
                 svg {
-                    color: rgb(29, 155, 240);
+                    color: $blue-color-1;
                 }
             }
             p {
-                color: rgb(29, 155, 240);
+                color: $blue-color-1;
             }
         }
     }
