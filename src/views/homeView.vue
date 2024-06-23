@@ -69,7 +69,9 @@ export default {
         },
     },
     mounted() {
-        this.verifyToken();
+        if (this.accessToken || this.refreshToken) {
+            this.verifyToken();
+        }
     },
 };
 </script>
