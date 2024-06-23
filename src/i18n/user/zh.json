@@ -1,0 +1,15 @@
+{
+    "user": {
+        "updateUserInfo": "编辑个人资料",
+        "post": "帖子",
+        "like": "喜欢"
+    },
+    "setUser": {
+        "title": "编辑个人资料",
+        "button": "提交",
+        "name": "向大家展示的名字",
+        "introduction": "简介",
+        "place": "位置",
+        "website": "网站"
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "user": {
+        "updateUserInfo": "Edit profile",
+        "post": "Posts",
+        "like": "Likes"
+    },
+    "setUser": {
+        "title": "Edit profile",
+        "button": "Save",
+        "name": "Name",
+        "introduction": "Bio",
+        "place": "Location",
+        "website": "Website"
+    }
+}

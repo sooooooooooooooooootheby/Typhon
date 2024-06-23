@@ -13,69 +13,69 @@
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#home"></use>
                     </svg>
-                    <li class="text">主页</li>
+                    <li class="text">{{ $t("sideNav.home") }}</li>
                 </router-link>
 
                 <router-link to="/search" class="default" :class="{ select: isSearch }" v-if="isLogin">
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#search"></use>
                     </svg>
-                    <li class="text">探索</li>
+                    <li class="text">{{ $t("sideNav.search") }}</li>
                 </router-link>
 
                 <router-link to="/notifications" class="default" :class="{ select: isNotifications }" v-if="isLogin">
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#notifications"></use>
                     </svg>
-                    <li class="text">通知</li>
+                    <li class="text">{{ $t("sideNav.notifications") }}</li>
                 </router-link>
 
                 <router-link to="/letter" class="default" :class="{ select: isLetter }" v-if="isLogin">
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#mail"></use>
                     </svg>
-                    <li class="text">私信</li>
+                    <li class="text">{{ $t("sideNav.message") }}</li>
                 </router-link>
 
                 <router-link to="/trok" class="default" :class="{ select: isTrok }" v-if="isLogin">
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#Trok"></use>
                     </svg>
-                    <li class="text">Trok</li>
+                    <li class="text">{{ $t("sideNav.trok") }}</li>
                 </router-link>
 
                 <router-link to="/status" class="default" v-if="isLogin">
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#Pro"></use>
                     </svg>
-                    <li class="text">Pro</li>
+                    <li class="text">{{ $t("sideNav.pro") }}</li>
                 </router-link>
 
                 <router-link :to="/user/ + handleUser.userInfo.username" class="default" :class="{ select: isUser }" v-if="isLogin">
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#user-circle"></use>
                     </svg>
-                    <li class="text">个人资料</li>
+                    <li class="text">{{ $t("sideNav.userinfo") }}</li>
                 </router-link>
 
                 <router-link to="/setting" class="default" :class="{ select: isSetting }">
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#setting"></use>
                     </svg>
-                    <li class="text">设置</li>
+                    <li class="text">{{ $t("sideNav.setting") }}</li>
                 </router-link>
 
                 <button @click="this.$parent.cutWritePanel()" v-if="isLogin">
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#pen"></use>
                     </svg>
-                    发帖
+                    {{ $t("sideNav.post") }}
                 </button>
             </ul>
         </nav>
         <div class="user" v-if="isLogin" @click="animateElement">
             <div class="logout" ref="logout">
-                <a @click="handleLogout">登出 @{{ handleUser.userInfo.name }}</a>
+                <a @click="handleLogout">{{ $t('sideNav.logout') }} @{{ handleUser.userInfo.name }}</a>
             </div>
             <div class="head">
                 <img :src="handleUser.userInfo.head" alt="" />

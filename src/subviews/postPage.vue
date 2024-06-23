@@ -47,7 +47,7 @@
 
             <div class="writeComment" id="comment">
                 <span class="title">
-                    回复: <router-link :to="/user/ + handlePost.postDetail.username">@{{ handlePost.postDetail.username }}</router-link>
+                    {{ $t("post.reply") }}: <router-link :to="/user/ + handlePost.postDetail.username">@{{ handlePost.postDetail.username }}</router-link>
                 </span>
                 <div class="box">
                     <div class="left">
@@ -60,7 +60,7 @@
             </div>
             <form @submit.prevent="handleSubmit">
                 <input type="hidden" name="comment" :value="text" />
-                <button type="submit" class="button">回复</button>
+                <button type="submit" class="button">{{ $t("post.replyButton") }}</button>
             </form>
             <iframe name="stop" style="display: none"></iframe>
 
@@ -78,7 +78,7 @@
                                     <span>{{ cid.name }}</span>
                                     <p>@{{ cid.username }}</p>
                                 </router-link>
-                                <p>{{ time(cid.create_time) }}</p>
+                                <p>{{ time(cid.create_time) }} {{ $t(times) }}</p>
                             </div>
                             <div class="content">
                                 {{ cid.content }}
@@ -118,19 +118,20 @@ export default {
             isPortrait: false,
 
             compiledMarkdown: "",
-            text: "发布你的回复",
+            text: "",
             postTime: null,
             isLike: false,
             throttledLikes: null,
             throttledComment: null,
             author: {},
 
-            topNavTitle: "",
+            topNavTitle: "post.title",
             show: 1,
 
             commentList: [],
             page: 1,
             pageSize: 5,
+            times: "",
         };
     },
     methods: {
@@ -157,7 +158,7 @@ export default {
             let hour = date.getUTCHours().toString().padStart(2, "0");
             let minute = date.getUTCMinutes().toString().padStart(2, "0");
 
-            return `上午${hour}:${minute} · ${year}年${month}月${day}日`;
+            return `${hour}:${minute} · ${year}-${month}-${day}`;
         },
         time(time) {
             const currentTime = new Date();
@@ -172,15 +173,20 @@ export default {
 
             let displayTimeDifference = "";
             if (yearDifference > 0) {
-                displayTimeDifference = `${yearDifference} 年前`;
+                displayTimeDifference = `${yearDifference}`;
+                this.times = "post.time.year";
             } else if (daysDifference > 0) {
-                displayTimeDifference = `${daysDifference} 天前`;
+                displayTimeDifference = `${daysDifference}`;
+                this.times = "post.time.day";
             } else if (hoursDifference > 0) {
-                displayTimeDifference = `${hoursDifference} 小时前`;
+                displayTimeDifference = `${hoursDifference}`;
+                this.times = "post.time.hour";
             } else if (minutesDifference > 0) {
-                displayTimeDifference = `${minutesDifference} 分钟前`;
+                displayTimeDifference = `${minutesDifference}`;
+                this.times = "post.time.minutes";
             } else {
-                displayTimeDifference = `${secondsDifference} 秒前`;
+                displayTimeDifference = `${secondsDifference}`;
+                this.times = "post.time.seconds";
             }
 
             return displayTimeDifference;
@@ -195,10 +201,9 @@ export default {
                 }
 
                 this.showMarkdown();
-                this.topNavTitle = this.handlePost.postDetail.name + " 的帖子";
                 this.postTime = this.handleTime(this.handlePost.postDetail.create_time);
                 this.author = { head: this.handlePost.postDetail.head, name: this.handlePost.postDetail.name, username: this.handlePost.postDetail.username, introduction: this.handlePost.postDetail.introduction };
-                document.title = `${this.author.name} 的帖子 | Typhon`;
+                document.title = `${this.author.name} ${ this.title } | Typhon`;
             } catch (err) {
                 console.log(err);
             }

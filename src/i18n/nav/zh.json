@@ -1,0 +1,19 @@
+{
+    "sideNav": {
+        "home": "主页",
+        "search": "探索",
+        "notifications": "通知",
+        "message": "私信",
+        "trok": "Trok",
+        "pro": "Pro",
+        "userinfo": "个人资料",
+        "setting": "设置",
+        "post": "发帖",
+        "logout": "登出"
+    },
+    "write": {
+        "image1": "已选择",
+        "image2": "作为封面",
+        "button": "发布！"
+    }
+}

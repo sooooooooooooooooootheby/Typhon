@@ -1,39 +1,39 @@
 <template>
-    <div class="title">你的账户</div>
+    <div class="title">{{ $t("user.title") }}</div>
     <div class="user">
-        <div class="noLoginUserSetting" v-if="!token"><router-link to="/login">登录</router-link>后查看用户相关设置</div>
+        <div class="noLoginUserSetting" v-if="!token"><router-link to="/login">{{ $t("user.nologin.a") }}</router-link>{{ $t("user.nologin.p") }}</div>
         <div class="userSetting" v-else>
             <ul>
                 <span class="subTitle">
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#user-circle"></use>
                     </svg>
-                    用户信息
+                    {{ $t("user.block1.title") }}
                 </span>
                 <li>
                     <div>
-                        <span>用户名</span>
+                        <span>{{ $t("user.block1.span1") }}</span>
                         <p>@{{ handleUser.userInfo.username }}</p>
                     </div>
                 </li>
                 <li>
                     <div>
-                        <span>账户创建时间</span>
+                        <span>{{ $t("user.block1.span2") }}</span>
                         <p @load="handleTime">{{ create_time }}</p>
                     </div>
                 </li>
-                <p>个人信息前往<router-link :to="/user/ + handleUser.userInfo.username">个人资料页</router-link>编辑个人资料</p>
+                <p>{{ $t("user.block1.p1") }}<router-link :to="/user/ + handleUser.userInfo.username">{{ $t("user.block1.p2") }}</router-link>{{ $t("user.block1.p3") }}</p>
             </ul>
             <ul>
                 <span class="subTitle">
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#face-id"></use>
                     </svg>
-                    安全信息
+                    {{ $t("user.block2.title") }}
                 </span>
                 <li @click="cutEmailPanel('email')">
                     <div>
-                        <span>邮箱</span>
+                        <span>{{ $t("user.block2.span1") }}</span>
                         <p>{{ handleUser.userInfo.email }}</p>
                     </div>
                     <svg class="icon" aria-hidden="true">
@@ -42,8 +42,8 @@
                 </li>
                 <li @click="cutEmailPanel('password')">
                     <div>
-                        <span>密码</span>
-                        <p>修改你的密码</p>
+                        <span>{{ $t("user.block2.span2") }}</span>
+                        <p>{{ $t("user.block2.p2") }}</p>
                     </div>
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#arrow-forward-simple"></use>
@@ -51,8 +51,8 @@
                 </li>
                 <li @click="cutEmailPanel('deleteUser')">
                     <div>
-                        <span>注销账户</span>
-                        <p>将你的账户从服务器中删除</p>
+                        <span>{{ $t("user.block2.span3") }}</span>
+                        <p>{{ $t("user.block2.p3") }}</p>
                     </div>
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#arrow-forward-simple"></use>

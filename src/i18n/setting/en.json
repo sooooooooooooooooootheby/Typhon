@@ -1,0 +1,55 @@
+{
+    "menu": {
+        "title": "setting",
+        "user": "Your account",
+        "status": "Subscribe to Pro",
+        "language": "Language"
+    },
+    "user": {
+        "title": "Your account",
+        "block1": {
+            "title": "Account information",
+            "span1": "Username",
+            "span2": "Account creation",
+            "p1": "Personal Information Go to ",
+            "p2": "the profile page ",
+            "p3": "to edit your profile"
+        },
+        "block2": {
+            "title": "Safety information",
+            "span1": "Email",
+            "span2": "Password",
+            "p2": "Change your password",
+            "span3": "Deactivate your account",
+            "p3": "Delete your account from the server (forever)"
+        },
+        "window": {
+            "email": {
+                "title": "Change your email",
+                "span1": "New email",
+                "span2": "Email verification code",
+                "button": "Submit"
+            },
+            "password": {
+                "title": "Change your password",
+                "span1": "Old password",
+                "span2": "New password",
+                "span3": "Enter the new password again",
+                "button": "Submit"
+            },
+            "delete": {
+                "title": "Deactivate your account",
+                "span1": "email",
+                "span2": "password",
+                "button": "Submit"
+            },
+            "time": "Send"
+        }
+    },
+    "language": {
+        "title": "Language",
+        "display": {
+            "title": "Display language"
+        }
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "author": {
+        "title": "author"
+    },
+    "login": {
+        "title": "Typhon's new partner?",
+        "text": "Join us? Sign up now!",
+        "register": "Register",
+        "login": "Login"
+    },
+    "status": {
+        "title": "subscribe to Pro",
+        "text": "Subscribe to unlock new features, regardless of whether you meet the conditions, you can not get advertising revenue (laugh, there is no advertising revenue)",
+        "button": "Subscribe"
+    },
+    "newUser": {
+        "title": "new partner!"
+    }
+}

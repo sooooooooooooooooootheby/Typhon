@@ -1,17 +1,26 @@
 // 按钮
-@mixin buttonMain($white: $background-color-light-0, $black: $background-color-light-1) {
+@mixin buttonMain(
+    $white: $background-color-light-0,
+    $black: $background-color-light-1
+) {
     background-color: $black;
     border: 2px solid $black;
     color: $white;
 }
 
-@mixin buttonHover($white: $background-color-light-0, $black: $background-color-light-1) {
+@mixin buttonHover(
+    $white: $background-color-light-0,
+    $black: $background-color-light-1
+) {
     background-color: $white;
     border: 2px solid $black;
     color: $black;
 }
 
-@mixin buttonActive($white: $background-color-light-0, $black: $background-color-light-1) {
+@mixin buttonActive(
+    $white: $background-color-light-0,
+    $black: $background-color-light-1
+) {
     border: 2px solid $white;
 }
 
@@ -73,4 +82,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+// 下拉菜单
+@mixin select {
+    select {
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        -ms-appearance: none;
+        outline: none;
+        -webkit-tap-highlight-color: #fff;
+        border: none;
+        background-color: transparent;
+    }
 }

@@ -1,6 +1,8 @@
 import "./assets/css/main.scss";
 // iconfont 图标包
-import "//at.alicdn.com/t/c/font_4516886_pbr2y1xhmzq.js";
+import "//at.alicdn.com/t/c/font_4516886_7n22gn2p8e.js";
+// 国家旗帜
+import "//at.alicdn.com/t/c/font_4595004_n1bscyrodc.js";
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";
@@ -11,6 +13,7 @@ import vuepressTheme from "@kangc/v-md-editor/lib/theme/vuepress.js";
 import "@kangc/v-md-editor/lib/theme/style/vuepress.css";
 import Prism from "prismjs";
 import "prismjs/components/prism-json";
+import i18n from '@/i18n/i18n.js'
 
 VMdEditor.use(vuepressTheme, {
     Prism,
@@ -34,5 +37,6 @@ app.use(createPinia());
 app.use(router);
 app.use(VueLazyload);
 app.use(VMdEditor);
+app.use(i18n);
 
 app.mount("#app");

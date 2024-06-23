@@ -1,0 +1,19 @@
+{
+    "postStream": {
+        "title": "Home",
+        "message": "There are no more posts"
+    },
+    "post": {
+        "reply": "Replying to",
+        "replyButton": "Reply",
+        "hint": "Post your reply",
+        "time": {
+            "year": "year",
+            "day": "day",
+            "hour": "hour",
+            "minutes": "minutes",
+            "seconds": "seconds"
+        },
+        "title": "Post"
+    }
+}

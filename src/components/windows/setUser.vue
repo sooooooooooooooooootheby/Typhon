@@ -4,8 +4,8 @@
             <div class="infoPanel" onclick="event.stopPropagation()">
                 <div class="controlBar">
                     <div class="close" @click="this.$parent.cutInfoPanel()"></div>
-                    <p>编辑个人资料</p>
-                    <button type="submit" class="button">提交</button>
+                    <p>{{ $t("setUser.title") }}</p>
+                    <button type="submit" class="button">{{ $t("setUser.button") }}</button>
                 </div>
                 <div class="info">
                     <div class="cover">
@@ -44,28 +44,28 @@
                     <div class="input">
                         <label for="name">
                             <div>
-                                <span>向大家展示的名字</span>
+                                <span>{{ $t("setUser.name") }}</span>
                                 <span :class="{ warn: nameWarn }">{{ nameCharCount }} / 24</span>
                             </div>
                             <input type="text" name="name" id="name" v-model="nameValue" @input="limitInput(nameValue, 23, 'nameValue', 'nameWarn', 'nameCharCount')" />
                         </label>
                         <label for="introduction">
                             <div>
-                                <span>简介</span>
+                                <span>{{ $t("setUser.introduction") }}</span>
                                 <span :class="{ warn: introductionWarn }">{{ introductionCharCount }} / 255</span>
                             </div>
                             <textarea type="text" name="introduction" id="introduction" v-model="introductionValue" @input="limitInput(introductionValue, 254, 'introductionValue', 'introductionWarn', 'introductionCharCount')" rows="5" />
                         </label>
                         <label for="place">
                             <div>
-                                <span>位置</span>
+                                <span>{{ $t("setUser.place") }}</span>
                                 <span :class="{ warn: placeWarn }">{{ placeCharCount }} / 30</span>
                             </div>
                             <input type="text" name="place" id="place" v-model="placeValue" @input="limitInput(placeValue, 29, 'placeValue', 'placeWarn', 'placeCharCount')" />
                         </label>
                         <label for="website">
                             <div>
-                                <span>网站</span>
+                                <span>{{ $t("setUser.website") }}</span>
                                 <span :class="{ warn: websiteWarn }">{{ websiteCharCount }} / 100</span>
                             </div>
                             <div class="http">https://<input type="text" name="website" id="website" v-model="websiteValue" @input="limitInput(websiteValue, 99, 'websiteValue', 'websiteWarn', 'websiteCharCount')" /></div>

@@ -5,7 +5,7 @@
             <card v-for="(pid, index) in postList" :key="pid" :post="postList[index]" />
             <div class="loadingBox" ref="loading">
                 <div class="loader" v-if="!message"></div>
-                <span>{{ message }}</span>
+                <span>{{ $t(message) }}</span>
             </div>
         </div>
         <sideFooter />
@@ -32,8 +32,8 @@ export default {
             pageSize: 5,
             postList: [],
             newPostList: [],
-            message: null,
-            topNavTitle: "主页",
+            message: "postStream.message",
+            topNavTitle: "postStream.title",
         };
     },
     methods: {
@@ -51,8 +51,6 @@ export default {
                     if (this.newPostList.length > 0) {
                         this.postList = [...this.postList, ...this.newPostList];
                         this.page++;
-                    } else {
-                        this.message = "没有更多帖子了，或许你可以过段时间刷新一下";
                     }
                 } catch (err) {
                     console.log(err);
@@ -68,7 +66,6 @@ export default {
                 }
 
                 this.postList = this.handlePost.postList;
-                this.message = "登录查看更多帖子";
             } catch (err) {
                 console.log(err);
             }

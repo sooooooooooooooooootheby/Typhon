@@ -1,0 +1,19 @@
+{
+    "sideNav": {
+        "home": "Home",
+        "search": "Search",
+        "notifications": "Notifications",
+        "message": "Message",
+        "trok": "Trok",
+        "pro": "Pro",
+        "userinfo": "Profile",
+        "setting": "Setting",
+        "post": "Post",
+        "logout": "logout"
+    },
+    "write": {
+        "image1": "",
+        "image2": "has been selected as the cover",
+        "button": "Post!"
+    }
+}

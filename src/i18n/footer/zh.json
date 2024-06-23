@@ -1,0 +1,19 @@
+{
+    "author": {
+        "title": "作者"
+    },
+    "login": {
+        "title": "Typhon的新伙伴?",
+        "text": "加入我们？立刻注册!",
+        "register": "注册",
+        "login": "登录"
+    },
+    "status": {
+        "title": "订阅 Pro",
+        "text": "订阅以解锁新功能，无论符不符合条件，都不可以获得广告分成(笑死，根本不会有广告收入)",
+        "button": "订阅"
+    },
+    "newUser": {
+        "title": "新的伙伴！"
+    }
+}

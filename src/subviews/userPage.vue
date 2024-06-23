@@ -13,7 +13,7 @@
 
                 <div class="text">
                     <div class="buttonNav">
-                        <button v-if="handleUser.userInfo.username === handleUser.usersInfo.username" @click="cutInfoPanel()">编辑个人资料</button>
+                        <button v-if="handleUser.userInfo.username === handleUser.usersInfo.username" @click="cutInfoPanel()">{{ $t("user.updateUserInfo") }}</button>
                     </div>
                     <div class="userInfo">
                         <span>
@@ -40,8 +40,8 @@
                 </div>
             </div>
             <div class="nav">
-                <router-link :to="`/user/${handleUser.usersInfo.username}`" :class="{ select: isArticleList }">帖子</router-link>
-                <router-link :to="`/user/${handleUser.usersInfo.username}/like`" :class="{ select: isLikeList }">喜欢</router-link>
+                <router-link :to="`/user/${handleUser.usersInfo.username}`" :class="{ select: isArticleList }">{{ $t("user.post") }}</router-link>
+                <router-link :to="`/user/${handleUser.usersInfo.username}/like`" :class="{ select: isLikeList }">{{ $t("user.like") }}</router-link>
             </div>
             <div class="content">
                 <router-view :uid="uid" />
@@ -55,7 +55,7 @@
 <script>
 import topNav from "@/components/topNav.vue";
 import sideFooter from "@/components/sideFooter.vue";
-import setUser from "@/components/setUser.vue";
+import setUser from "@/components/windows/setUser.vue";
 import { userStore } from "@/stores/user.js";
 
 export default {
@@ -85,7 +85,7 @@ export default {
             try {
                 await this.handleUser.getUserInfo({ username: this.username });
                 this.topNavTitle = this.handleUser.usersInfo.name;
-                this.topNavSubTitle = this.handleUser.usersInfo.post_count + " 帖子  " + this.handleUser.usersInfo.like_count + " 喜欢";
+                this.topNavSubTitle = this.handleUser.usersInfo.post_count + " " + this.$t("user.post") + " " + this.handleUser.usersInfo.like_count + " " + this.$t("user.like");
                 this.uid = this.handleUser.usersInfo.uid;
                 this.usersInfo = this.handleUser.usersInfo;
                 document.title = `${this.usersInfo.name} (@${this.usersInfo.username}) | Typhon`;

@@ -5,10 +5,10 @@
                 <use xlink:href="#arrow-back"></use>
             </svg>
             <div class="title" v-if="!subTitle">
-                <span>{{ title }}</span>
+                <span>{{ $t(title) }}</span>
             </div>
             <div class="subTitle" v-else>
-                <span>{{ title }}</span>
+                <span>{{ $t(title) }}</span>
                 <p>{{ subTitle }}</p>
             </div>
         </div>

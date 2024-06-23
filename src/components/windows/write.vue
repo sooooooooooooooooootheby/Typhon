@@ -23,8 +23,8 @@
                             <use xlink:href="#image"></use>
                         </svg>
                     </label>
-                    <p v-show="imageName">已选择 {{ imageName }} 作为封面</p>
-                    <button type="submit" class="button">发布!</button>
+                    <p v-show="imageName">{{ $t("write.image1") }} {{ imageName }} {{ $t("write.image2") }}</p>
+                    <button type="submit" class="button">{{ $t("write.button") }}</button>
                 </form>
                 <iframe name="stop" style="display: none"></iframe>
             </div>

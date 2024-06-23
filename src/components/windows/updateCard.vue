@@ -8,20 +8,20 @@
                             <use xlink:href="#mail"></use>
                         </svg>
                     </div>
-                    <span>修改你的邮箱</span>
+                    <span>{{ $t("user.window.email.title") }}</span>
                 </div>
                 <label>
-                    <span>新的邮箱</span>
+                    <span>{{ $t("user.window.email.span1") }}</span>
                     <input type="text" v-model="email" />
                 </label>
                 <label>
-                    <span>邮箱验证码</span>
+                    <span>{{ $t("user.window.email.span2") }}</span>
                     <div class="code">
                         <input type="text" v-model="code" />
-                        <button @click="sendEmail">{{ time }}</button>
+                        <button @click="sendEmail">{{ $t(time) }}</button>
                     </div>
                 </label>
-                <button class="submit" @click="handleUpdateEmail">提交</button>
+                <button class="submit" @click="handleUpdateEmail">{{ $t("user.window.email.button") }}</button>
             </div>
             <div v-if="cardParameter === 'password'">
                 <div>
@@ -30,10 +30,10 @@
                             <use xlink:href="#password"></use>
                         </svg>
                     </div>
-                    <span>修改你的密码</span>
+                    <span>{{ $t("user.window.password.title") }}</span>
                 </div>
                 <label>
-                    <span>旧的密码</span>
+                    <span>{{ $t("user.window.password.span1") }}</span>
                     <div class="password">
                         <input :type="inputValue1" v-model="oldPassword" />
                         <button type="button" @click="showPassword(1)">
@@ -44,7 +44,7 @@
                     </div>
                 </label>
                 <label>
-                    <span>新的密码</span>
+                    <span>{{ $t("user.window.password.span2") }}</span>
                     <div class="password">
                         <input :type="inputValue2" v-model="newPassword1" />
                         <button type="button" @click="showPassword(2)">
@@ -55,7 +55,7 @@
                     </div>
                 </label>
                 <label>
-                    <span>再次输入新的密码</span>
+                    <span>{{ $t("user.window.password.span3") }}</span>
                     <div class="password">
                         <input :type="inputValue3" v-model="newPassword2" />
                         <button type="button" @click="showPassword(3)">
@@ -65,7 +65,7 @@
                         </button>
                     </div>
                 </label>
-                <button class="submit" @click="handleUpdatePassword">提交</button>
+                <button class="submit" @click="handleUpdatePassword">{{ $t("user.window.password.button") }}</button>
             </div>
             <div v-if="cardParameter === 'deleteUser'">
                 <div>
@@ -74,14 +74,14 @@
                             <use xlink:href="#delete"></use>
                         </svg>
                     </div>
-                    <span>注销你的账户</span>
+                    <span>{{ $t("user.window.delete.title") }}</span>
                 </div>
                 <label>
-                    <span>邮箱</span>
+                    <span>{{ $t("user.window.delete.span1") }}</span>
                     <input type="text" v-model="email" />
                 </label>
                 <label>
-                    <span>密码</span>
+                    <span>{{ $t("user.window.delete.span2") }}</span>
                     <div class="password">
                         <input :type="inputValue3" v-model="password" />
                         <button type="button" @click="showPassword(3)">
@@ -91,7 +91,7 @@
                         </button>
                     </div>
                 </label>
-                <button class="submit" @click="handleDeleteUser">提交</button>
+                <button class="submit" @click="handleDeleteUser">{{ $t("user.window.delete.button") }}</button>
             </div>
         </div>
     </div>
@@ -114,7 +114,7 @@ export default {
             token: localStorage.getItem("accessToken"),
             email: null,
             code: null,
-            time: "发送",
+            time: "user.window.time",
             timeDown: 0,
             oldPassword: null,
             newPassword1: null,
@@ -140,7 +140,7 @@ export default {
                     this.timeDown--;
                     this.time = this.timeDown;
                 } else {
-                    this.time = "发送";
+                    this.time = "user.window.time";
                     clearInterval(timer);
                 }
             }, 1000);

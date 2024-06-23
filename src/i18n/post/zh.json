@@ -1,0 +1,19 @@
+{
+    "postStream": {
+        "title": "主页",
+        "message": "没有更多帖子了"
+    },
+    "post": {
+        "reply": "回复",
+        "replyButton": "回复",
+        "hint": "发布你的回复",
+        "time": {
+            "year": "年前",
+            "day": "天前",
+            "hour": "小时前",
+            "minutes": "分钟前",
+            "seconds": "秒前"
+        },
+        "title": "帖子"
+    }
+}

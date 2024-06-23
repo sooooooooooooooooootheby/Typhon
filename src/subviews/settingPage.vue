@@ -6,7 +6,7 @@
                 <li>
                     <router-link to="/setting" :class="{ select: isUser }">
                         <div>
-                            <span> 你的账户 </span>
+                            <span> {{ $t("menu.user") }} </span>
                             <svg class="icon" aria-hidden="true">
                                 <use xlink:href="#arrow-forward-simple"></use>
                             </svg>
@@ -16,7 +16,17 @@
                 <li>
                     <router-link to="/status">
                         <div>
-                            <span> 升级状态 </span>
+                            <span> {{ $t("menu.status") }} </span>
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#arrow-forward-simple"></use>
+                            </svg>
+                        </div>
+                    </router-link>
+                </li>
+                <li>
+                    <router-link to="/language" :class="{ select: isLanguage }">
+                        <div>
+                            <span> {{ $t("menu.language") }} </span>
                             <svg class="icon" aria-hidden="true">
                                 <use xlink:href="#arrow-forward-simple"></use>
                             </svg>
@@ -46,16 +56,18 @@ export default {
         return {
             handleUser: user,
 
-            topNavTitle: "设置",
+            topNavTitle: "menu.title",
             noSearch: 1,
 
             isUser: false,
+            isLanguage: false,
         };
     },
     watch: {
         "$route.path": {
             handler(newPath) {
                 this.isUser = /^\/setting$/.test(newPath);
+                this.isLanguage = /^\/language$/.test(newPath);
             },
             immediate: true,
         },
