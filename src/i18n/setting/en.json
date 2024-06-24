@@ -6,6 +6,10 @@
         "language": "Language"
     },
     "user": {
+        "nologin": {
+            "a": "Login",
+            "p": "to view user-related Settings"
+        },
         "title": "Your account",
         "block1": {
             "title": "Account information",

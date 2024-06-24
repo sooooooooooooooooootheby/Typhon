@@ -38,6 +38,7 @@ export default {
     },
     methods: {
         cutLanguage(language) {
+            localStorage.setItem("locale", language);
             this.$i18n.locale = language;
             this.zhSelected = language === "zh";
             this.enSelected = language === "en";

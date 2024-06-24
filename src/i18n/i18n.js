@@ -16,20 +16,26 @@ const messages = {
         ...postZh,
         ...footerZh,
         ...userZh,
-        ...settingZh
+        ...settingZh,
     },
     en: {
         ...navEn,
         ...postEn,
         ...footerEn,
         ...userEn,
-        ...settingEn
+        ...settingEn,
     },
 };
 
+let language = localStorage.getItem("locale");
+
+if (!language) {
+    language = "en";
+}
+
 const i18n = createI18n({
     legacy: false,
-    locale: "en",
+    locale: language,
     messages,
 });
 
